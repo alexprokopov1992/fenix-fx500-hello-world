@@ -3,9 +3,9 @@ manifest:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
     - name: baden
-      url-base: git@github.com:baden
+      url-base: https://github.com/baden
     - name: badenwork
-      url-base: git@github.com:badenwork
+      url-base: https://github.com/badenwork
 
   group-filter: [-bsec2]
 
