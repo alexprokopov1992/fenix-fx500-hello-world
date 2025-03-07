@@ -1,0 +1,537 @@
+/*
+ * Copyright (c) 2023 Nuvoton Technology Corporation.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <nuvoton/m2354.dtsi>
+// #include "fxa500_02-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "Nuvoton PFM M467 board";
+	compatible = "nuvoton,pfm-m467", "nuvoton,m2354";
+
+	aliases {
+		led0 = &out_led;
+		// sw0 = &user_button_1;
+		// sw1 = &user_button_2;
+		// lte = &gsm;
+		// adc0 = &eadc;
+
+		// analog-inputs = &analog_inputs0;
+		// v12v = &v12v;
+		// shake-sensor = &shake_sensor;
+		// accelerometer = &mma8652fc;
+
+		// shock-sensor = &shock_sensor;
+	};
+
+	chosen {
+		zephyr,console = &uart3;
+		zephyr,shell-uart = &uart3;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &code_partition;
+		zephyr,boot-partition = &boot_partition;
+		// zephyr,canbus = &canfd0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		out_led: led_0 {
+			gpios = <&gpiof 6 GPIO_ACTIVE_HIGH>;
+			label = "External LED out";
+		};
+	};
+
+	// v12v: v12v {
+	// 	compatible = "voltage-divider";
+	// 	status = "okay";
+	// 	io-channels = <&eadc 6>;
+	// 	// Cheat! Multiply by 1000 for millivolts is voltage divider sensor output
+	// 	full-ohms = <(20000 + 2000)>;
+	// 	output-ohms = <2>;
+	// };
+
+	// shake_sensor: shake_sensor {
+	// 	compatible = "voltage-divider";
+	// 	status = "okay";
+	// 	io-channels = <&eadc 15>;
+	// 	// Cheat! Multiply by 1000 for millivolts is voltage divider sensor output
+	// 	full-ohms = <1000>;
+	// 	output-ohms = <1>;
+	// };
+
+	// shock_sensor: shock_sensor {
+	// 	compatible = "zephyr,shock-sensor";
+	// 	status = "okay";
+	// 	io-channels = <&eadc 15>;
+	// 	sampling-period-ms = <2>;
+	// 	// sampling-period-ms = <10>;
+	// };
+
+	// analog_inputs0: analog-input {
+	// 	compatible = "analog-input";
+	// 	// poll-period-ms = <32>;
+	// 	poll-period-ms = <100>;
+
+	// 	in1 {
+	// 		id = <0>;
+	// 		io-channels = <&eadc 14>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in2 {
+	// 		id = <1>;
+	// 		io-channels = <&eadc 13>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in3 {
+	// 		id = <2>;
+	// 		io-channels = <&eadc 12>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in4 {
+	// 		id = <3>;
+	// 		io-channels = <&eadc 11>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in5 {
+	// 		id = <4>;
+	// 		io-channels = <&eadc 10>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in6 {
+	// 		id = <5>;
+	// 		io-channels = <&eadc 9>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	// TODO: Я спеціально поміняв місцями два останніх канали,
+	// 	// щоб перевірити чи правильно буде працювати індексація
+	// 	in8 {
+	// 		id = <7>;
+	// 		io-channels = <&eadc 7>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// 	in7 {
+	// 		id = <6>;
+	// 		io-channels = <&eadc 8>;
+	// 		r_top = <1100>;
+	// 		r_bottom = <200>;
+	// 	};
+
+	// };
+	
+	zephyr,user {
+		// compatible = "gpio-output";
+
+		// ADC inputs
+		// in-1-
+
+		// Digital Inputs
+		// in-2-gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;	// 2. Капот
+
+		// Outputs
+		// out-1-gpios = <&gpiob 4 GPIO_ACTIVE_HIGH>;	// 1. Сирена
+		// out-2-gpios = <&gpiob 5 GPIO_ACTIVE_HIGH>;	// 2. Аварійка
+		// out-3-gpios = <&gpioc 0 GPIO_ACTIVE_HIGH>;	// 3. Закривання ЦЗ
+		// out-4-gpios = <&gpiod 3 GPIO_ACTIVE_HIGH>;	// 4. Відкривання ЦЗ
+		// out-5-gpios = <&gpiod 1 GPIO_ACTIVE_HIGH>;	// 5. Відкривання багажника
+		// out-6-gpios = <&gpioa 15 GPIO_ACTIVE_HIGH>;	// 6. Старт/Стоп
+		// out-7-gpios = <&gpiod 2 GPIO_ACTIVE_HIGH>;	// 7. НЗБД
+		// out-8-gpios = <&gpioa 14 GPIO_ACTIVE_HIGH>;	// 8. Канал 1
+
+		// io-channels = <&eadc 12>, <&eadc 14>;
+		// io-channels = <&eadc 14>;
+
+		// Analog Inputs sorted by channed index
+		// adc-channels = <&eadc 14>, <&eadc 13>, <&eadc 12>, <&eadc 11>, <&eadc 10>, <&eadc 9>, <&eadc 8>, <&eadc 7>, <&eadc 6>, <&eadc 15>;
+		// io-channels = <&eadc 6>, <&eadc 7>, <&eadc 8>, <&eadc 9>, <&eadc 10>, <&eadc 11>, <&eadc 12>, <&eadc 13>, <&eadc 14>, <&eadc 15>;
+		// io-channels = <&eadc 15>;
+	};
+
+	// fstab {
+	// 	compatible = "zephyr,fstab";
+	// 	lfs1: lfs1 {
+	// 		compatible = "zephyr,fstab,littlefs";
+	// 		read-size = <1>;
+	// 		prog-size = <16>;
+	// 		cache-size = <256>;
+	// 		lookahead-size = <32>;
+	// 		block-cycles = <512>;
+	// 		partition = <&littlefs_partition>;
+	// 		mount-point = "/lfs1";
+	// 	};
+	// };
+
+	// gpio_keys {
+	// 	compatible = "gpio-keys";
+	// 	user_button_1: button_1 {
+	// 		label = "User SW2";
+	// 		gpios = <&gpioh 1 GPIO_ACTIVE_LOW>;
+	// 		zephyr,code = <INPUT_KEY_0>;
+	// 	};
+	// 	user_button_2: button_2 {
+	// 		label = "User SW3";
+	// 		gpios = <&gpioh 0 GPIO_ACTIVE_LOW>;
+	// 		zephyr,code = <INPUT_KEY_1>;
+	// 	};
+	// };
+};
+
+&eadc {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+
+	// // &eadc_pb14	/* In1. Запалювання */
+	// channel@14 {
+	// 	reg = <14>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb13	/* In2. Капот */
+	// channel@13 {
+	// 	reg = <13>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb12	/* In3. PIN */
+	// channel@12 {
+	// 	reg = <12>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb11	/* In4. Парковка */
+	// channel@11 {
+	// 	reg = <11>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb10	/* In5. Тормоз */
+	// channel@10 {
+	// 	reg = <10>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb9	/* In6. Мастило */
+	// channel@9 {
+	// 	reg = <9>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb8	/* In7. Ручка */
+	// channel@8 {
+	// 	reg = <8>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb7	/* In8. Дозвіл/Резервне живлення */
+	// channel@7 {
+	// 	reg = <7>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb6	/* +12V Основне живлення */
+	// channel@6 {
+	// 	reg = <6>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // &eadc_pb15	/* Датчик удару */
+	// channel@15 {
+	// 	reg = <15>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	// zephyr,oversampling = <0>;
+	// 	zephyr,vref-mv = <3300>;
+	// };
+
+	// // 	// vref-internal-mv = <3000>;
+	// pinctrl-0 = <
+	// 	&eadc_pb14	/* In1. Запалювання */
+	// 	&eadc_pb13	/* In2. Капот */
+	// 	&eadc_pb12	/* In3. PIN */
+	// 	&eadc_pb11	/* In4. Парковка */
+	// 	&eadc_pb10	/* In5. Тормоз */
+	// 	&eadc_pb9	/* In6. Мастило */
+	// 	&eadc_pb8	/* In7. Ручка */
+	// 	&eadc_pb7	/* In8. Дозвіл/Резервне живлення */
+	// 	&eadc_pb6	/* +12V Основне живлення */
+	// 	&eadc_pb15	/* Датчик удару */
+	// >;
+	// pinctrl-names = "default";
+
+// 	#address-cells = <1>;
+// 	#size-cells = <0>;
+// 	vref-internal-mv = <3000>;
+
+	// channel@14 {
+	// 	reg = <14>;
+	// 	zephyr,gain = "ADC_GAIN_1";
+	// 	zephyr,reference = "ADC_REF_INTERNAL";
+	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+	// 	zephyr,resolution = <12>;
+	// 	zephyr,vref-mv = <3000>;
+	// 	// label = "In1. Запалювання";
+
+	// };
+};
+
+// &spi2 {
+// 	status = "okay";
+// 	pinctrl-0 = <&spi2_pa9_pa8_pa10>;
+// 	pinctrl-names = "default";
+// 	cs-gpios = <&gpioa 11 GPIO_ACTIVE_LOW>;
+
+// 	spi2_flash: w25q128@0 {
+// 		// compatible = "winbond,w25q128";
+// 		compatible = "jedec,spi-nor";
+// 		size = <(16*1024*1024)>;
+// 		reg = <0>;
+// 		spi-max-frequency = <1000000>;
+// 		// clk-frequency = <25000000>;
+// 		jedec-id = [ef 40 18];		// W25Q128JV-IN/IQ/JQ = 0xEF 40 18
+// 									// W25Q128JV-IM*/JM* = 0xEF 70 18
+// 		status = "okay";
+
+// 		partitions {
+// 			compatible = "fixed-partitions";
+// 			#address-cells = <1>;
+// 			#size-cells = <1>;
+
+// 			/* This is the littlefs v1 file system pre-installed
+// 		 	* by Particle.
+// 		 	*/
+// 			littlefs_partition: partition@0 {
+// 				label = "littlefs";
+// 				reg = <0x00000000 DT_SIZE_M(8)>;	// Eah! Half of entire memory.
+// 			};
+
+// 			/* 1MB partition to use for raw data storage. */
+// 			storage_partition: partition@800000 {
+// 				label = "storage";
+// 				reg = <DT_SIZE_M(8) DT_SIZE_M(1)>;			
+// 			};
+
+// 			/* 7MB partition for GPS-buffer data. */
+// 			gps_partition: partition@900000 {
+// 				label = "gps";
+// 				reg = <DT_SIZE_M(8) DT_SIZE_M(7)>;
+// 			};
+
+
+// 		};
+// 	};
+// };
+
+// &i2c1 {
+// 	status = "okay";
+// 	pinctrl-0 = <&i2c1_pa7_pa6>;
+// 	pinctrl-names = "default";
+
+// 	// Int on PC6/INT2
+// 	mma8652fc: mma8652fc@1d {
+// 		compatible = "nxp,fxos8700","nxp,mma8652fc";
+// 		reg = <0x1d>;
+// 		int1-gpios = <&gpioc 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+// 		// interrupt-parent = <&gpioc>;
+// 		// interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
+// 	};
+// };
+
+// // &scc {
+// // 	/* For USB 1.1 Host/Device/OTG, configure to 192MHz, which can generate necessary 48MHz. */
+// // 	/* For USB 2.0 Host/Device/OTG or no USB application, comment out to use default. */
+// // 	// core-clock = <192000000>;
+// // 	core-clock = <4000000>;
+// // };
+
+&gpioa {
+	status = "okay";
+};
+
+&gpiob {
+	status = "okay";
+};
+
+&gpioc {
+	status = "okay";
+};
+
+&gpiod {
+	status = "okay";
+};
+
+&gpiof {
+	status = "okay";
+};
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		// bootloader: partition@0 {
+		// 	label = "mcuboot";
+		// 	reg = <0x00000000 0x00020000>;
+		// 	read-only;
+		// };
+
+		// boot_partition: partition@100000 {
+		// 	label = "mcuboot";
+		// 	reg = <0x00100000 DT_SIZE_K(16)>;
+		// };
+
+		code_partition: partition@0 {
+			label = "image-0";
+			reg = <0x00000000 DT_SIZE_K(512)>;
+		};
+
+		// Значення налаштувань. Змінюються тільки при налаштуванні системи
+		// Дві сторінки для запобігання втрати даних
+		storage_partition_tpf: partition@80000 {
+			label = "storage_tpf";
+			reg = <0x80000 DT_SIZE_K(16)>;
+		};
+
+		// Збереження стану системи. Змінюється при будь-якій зміні стану системи.
+		// Проводиться відкадений запис за для підвищення строку служби пам'яті.
+		// Запис ведеться послідовно у три сторінки.
+		// Використовуються Zephyr Memory Storage (ZMS)
+		// https://docs.zephyrproject.org/latest/services/storage/zms/zms.html
+		storage_partition_nvs: partition@84000 {
+			label = "storage_nvs";
+			reg = <0x84000 DT_SIZE_K(16)>;
+		};
+
+		// Список користувачів, та всяка інша інформація, яка рідко змінюється.
+		storage_partition_nvs2: partition@88000 {
+			label = "storage_partition_nvs2";
+			reg = <0x88000 DT_SIZE_K(64)>;
+		};
+
+		// Збереження ключів.
+		storage_partition_pc_public_key: partition@98000 {
+			label = "storage_pc_public_key";
+			reg = <0x98000 DT_SIZE_K(16)>;
+		};
+
+		// Нерозподілена область.
+		storage_partition_unused: partition@9C000 {
+			label = "storage_partition_unused";
+			reg = <0x9C000 DT_SIZE_K(352)>;
+		};
+		
+		// Останні 48 кілобайти для загрузчика (треба впевнитись шо не перекривається з іншими розділами!)
+		boot_partition: partition@F4000 {
+			label = "bootloader";
+			reg = <(DT_SIZE_K(1024) - DT_SIZE_K(48)) DT_SIZE_K(48)>;
+		};
+	};
+};
+
+&uart3 {
+	current-speed = <115200>;
+	pinctrl-0 = <&uart3_pc2_pc3>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+// &uart5 {
+// 	current-speed = <115200>;
+// 	pinctrl-0 = <&uart5_pa4_pa5>;
+// 	pinctrl-names = "default";
+// 	status = "okay";
+
+// 	gsm: gsm-modem {
+// 		compatible = "simcom,a7682e";
+// 		label = "SIMCOM A7682E";
+
+// 		/*status-gpios = <&portb 12 GPIO_ACTIVE_LOW>; */
+
+// 		status-gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
+// 		dtr-gpios = <&gpioa 2 GPIO_ACTIVE_HIGH>;
+// 		pwrkey-gpios = <&gpiof 4 GPIO_ACTIVE_HIGH>;
+// 		power-gpios = <&gpioa 3 GPIO_ACTIVE_HIGH>;
+// 	};
+
+// };
+
+// &canfd0 {
+// 	bus-speed = <125000>;
+// 	bus-speed-data = <1000000>;
+// 	pinctrl-0 = <&canfd0_default>;
+// 	pinctrl-names = "default";
+// 	status = "okay";
+// };
+
+// &emac {
+// 	pinctrl-0 = <&emac_default>;
+// 	pinctrl-names = "default";
+// 	status = "okay";
+// };

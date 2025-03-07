@@ -1,0 +1,5 @@
+board:
+  name: fxa500_02
+  vendor: fenix
+  socs:
+    - name: m2354

@@ -2,6 +2,10 @@ manifest:
   remotes:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
+    - name: baden
+      url-base: git@github.com:baden
+    - name: badenwork
+      url-base: git@github.com:badenwork
 
   group-filter: [-bsec2]
 
@@ -33,6 +37,14 @@ manifest:
         #   - trusted-firmware-m
         #   - sof
       clone-depth: 1
+    - name: zephyr-soc-nuvoton-m2354
+      remote: baden
+      revision: main
+      path: modules/zephyr/soc/nuvoton/m2354
+    - name: hal_nuvoton
+      remote: badenwork
+      revision: master
+      path: modules/hal/nuvoton
 
     # - name: bsec2
     #   repo-path: Bosch-BSEC2-Library
@@ -40,6 +52,7 @@ manifest:
     #   path: app/src/ext_drivers/BSEC2
     #   groups:
     #     - bsec2
+
 
   self:
     west-commands: scripts/west-commands.yml
