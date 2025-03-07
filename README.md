@@ -30,8 +30,6 @@
 Сам Zephyr встановлювати не треба, він буде встановлений в процесі підготовки до збірки цого проєкту.
 
 /від Денис:/ Я тут буду залишати команди для MacOS, для інших систем будуть трохи відрізнятись.
-TODO: Я поки не впевнен шо по ZephyrSDK, треба розібратись чи треба його вставновити до підготовки до збірки,
-чи можно це зробити в процесі підготовки.
 
 # Підготовка до збірки
 
@@ -73,10 +71,6 @@ west build app --build-dir build-app -b fxa500_02
 
 ```
 west build app --build-dir build-app -b fxa500_02 -t flash
-```
-
-```
-west build app --build-dir build-app -p -b board_name -- -DOVERLAY_CONFIG=boards/board_name.conf -DEXTRA_CONF_FILE="boards/bsec.conf" -DBOARD_ROOT=app
 ```
 
 ## До речі. Під Windows та Linux, можна тестувати шось через натівну компіляцію
