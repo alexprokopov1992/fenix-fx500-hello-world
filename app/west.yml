@@ -1,0 +1,45 @@
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  group-filter: [-bsec2]
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.1.0-rc3
+      path: zephyr
+      import:
+        name-allowlist:
+          - cmsis
+          - littlefs
+          - lz4
+          - hal_wch
+        # name-blocklist:
+        #   - ci-tools
+        #   - hal_altera
+        #   - hal_cypress
+        #   - hal_infineon
+        #   - hal_microchip
+        #   - hal_nxp
+        #   - hal_openisa
+        #   - hal_silabs
+        #   - hal_xtensa
+        #   - hal_ti
+        #   - loramac-node
+        #   - net-tools
+        #   - edtt
+        #   - trusted-firmware-m
+        #   - sof
+      clone-depth: 1
+
+    # - name: bsec2
+    #   repo-path: Bosch-BSEC2-Library
+    #   remote: bosch
+    #   path: app/src/ext_drivers/BSEC2
+    #   groups:
+    #     - bsec2
+
+  self:
+    west-commands: scripts/west-commands.yml

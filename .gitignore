@@ -1,0 +1,17 @@
+build
+build*
+*.code-workspace
+*__pycache__*
+zephyr/
+
+# Zephyr workspace
+/.west
+/bootloader
+/modules
+/tools
+/zephyr
+__pycache__
+/test
+
+/.vscode
+/.venv
