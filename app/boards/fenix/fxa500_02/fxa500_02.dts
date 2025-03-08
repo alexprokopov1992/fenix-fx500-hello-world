@@ -19,14 +19,14 @@
 		// sw0 = &user_button_1;
 		// sw1 = &user_button_2;
 		// lte = &gsm;
-		// adc0 = &eadc;
+		adc0 = &eadc;
 
 		// analog-inputs = &analog_inputs0;
 		// v12v = &v12v;
 		// shake-sensor = &shake_sensor;
 		// accelerometer = &mma8652fc;
 
-		// shock-sensor = &shock_sensor;
+		shock-sensor = &shock_sensor;
 	};
 
 	chosen {
@@ -65,13 +65,13 @@
 	// 	output-ohms = <1>;
 	// };
 
-	// shock_sensor: shock_sensor {
-	// 	compatible = "zephyr,shock-sensor";
-	// 	status = "okay";
-	// 	io-channels = <&eadc 15>;
-	// 	sampling-period-ms = <2>;
-	// 	// sampling-period-ms = <10>;
-	// };
+	shock_sensor: shock_sensor {
+		compatible = "zephyr,shock-sensor";
+		status = "okay";
+		io-channels = <&eadc 15>;
+		sampling-period-ms = <2>;
+		// sampling-period-ms = <10>;
+	};
 
 	// analog_inputs0: analog-input {
 	// 	compatible = "analog-input";
@@ -200,130 +200,130 @@
 	#size-cells = <0>;
 	status = "okay";
 
-	// // &eadc_pb14	/* In1. Запалювання */
-	// channel@14 {
-	// 	reg = <14>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb14	/* In1. Запалювання */
+	channel@14 {
+		reg = <14>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb13	/* In2. Капот */
-	// channel@13 {
-	// 	reg = <13>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb13	/* In2. Капот */
+	channel@13 {
+		reg = <13>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb12	/* In3. PIN */
-	// channel@12 {
-	// 	reg = <12>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb12	/* In3. PIN */
+	channel@12 {
+		reg = <12>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb11	/* In4. Парковка */
-	// channel@11 {
-	// 	reg = <11>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb11	/* In4. Парковка */
+	channel@11 {
+		reg = <11>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb10	/* In5. Тормоз */
-	// channel@10 {
-	// 	reg = <10>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb10	/* In5. Тормоз */
+	channel@10 {
+		reg = <10>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb9	/* In6. Мастило */
-	// channel@9 {
-	// 	reg = <9>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb9	/* In6. Мастило */
+	channel@9 {
+		reg = <9>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb8	/* In7. Ручка */
-	// channel@8 {
-	// 	reg = <8>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb8	/* In7. Ручка */
+	channel@8 {
+		reg = <8>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb7	/* In8. Дозвіл/Резервне живлення */
-	// channel@7 {
-	// 	reg = <7>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb7	/* In8. Дозвіл/Резервне живлення */
+	channel@7 {
+		reg = <7>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb6	/* +12V Основне живлення */
-	// channel@6 {
-	// 	reg = <6>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb6	/* +12V Основне живлення */
+	channel@6 {
+		reg = <6>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
-	// // &eadc_pb15	/* Датчик удару */
-	// channel@15 {
-	// 	reg = <15>;
-	// 	zephyr,gain = "ADC_GAIN_1";
-	// 	zephyr,reference = "ADC_REF_INTERNAL";
-	// 	zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-	// 	zephyr,resolution = <12>;
-	// 	// zephyr,oversampling = <0>;
-	// 	zephyr,vref-mv = <3300>;
-	// };
+	// &eadc_pb15	/* Датчик удару */
+	channel@15 {
+		reg = <15>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		// zephyr,oversampling = <0>;
+		zephyr,vref-mv = <3300>;
+	};
 
 	// // 	// vref-internal-mv = <3000>;
-	// pinctrl-0 = <
-	// 	&eadc_pb14	/* In1. Запалювання */
-	// 	&eadc_pb13	/* In2. Капот */
-	// 	&eadc_pb12	/* In3. PIN */
-	// 	&eadc_pb11	/* In4. Парковка */
-	// 	&eadc_pb10	/* In5. Тормоз */
-	// 	&eadc_pb9	/* In6. Мастило */
-	// 	&eadc_pb8	/* In7. Ручка */
-	// 	&eadc_pb7	/* In8. Дозвіл/Резервне живлення */
-	// 	&eadc_pb6	/* +12V Основне живлення */
-	// 	&eadc_pb15	/* Датчик удару */
-	// >;
-	// pinctrl-names = "default";
+	pinctrl-0 = <
+		&eadc_pb14	/* In1. Запалювання */
+		&eadc_pb13	/* In2. Капот */
+		&eadc_pb12	/* In3. PIN */
+		&eadc_pb11	/* In4. Парковка */
+		&eadc_pb10	/* In5. Тормоз */
+		&eadc_pb9	/* In6. Мастило */
+		&eadc_pb8	/* In7. Ручка */
+		&eadc_pb7	/* In8. Дозвіл/Резервне живлення */
+		&eadc_pb6	/* +12V Основне живлення */
+		&eadc_pb15	/* Датчик удару */
+	>;
+	pinctrl-names = "default";
 
 // 	#address-cells = <1>;
 // 	#size-cells = <0>;

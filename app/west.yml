@@ -37,21 +37,21 @@ manifest:
         #   - trusted-firmware-m
         #   - sof
       clone-depth: 1
+
     - name: zephyr-soc-nuvoton-m2354
       remote: baden
       revision: main
       path: modules/zephyr/soc/nuvoton/m2354
+
     - name: hal_nuvoton
       remote: badenwork
       revision: master
       path: modules/hal/nuvoton
 
-    # - name: bsec2
-    #   repo-path: Bosch-BSEC2-Library
-    #   remote: bosch
-    #   path: app/src/ext_drivers/BSEC2
-    #   groups:
-    #     - bsec2
+    - name: shock-sensor-driver
+      path: modules/shock-sensor-driver
+      url: https://github.com/baden/zephyr-shock-sensor-driver.git
+      revision: main
 
 
   self:
