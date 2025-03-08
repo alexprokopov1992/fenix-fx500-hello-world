@@ -3,3 +3,11 @@ board:
   vendor: fenix
   socs:
     - name: m2354
+    #- name: esp32c6-mini
+  # revision:
+  #   format: <major.minor.patch|letter|number|custom>
+  #   default: <default-revision-value>
+  #   exact: <true|false>
+  #   revisions:
+  #   - name: <revA>
+  #   - name: <revB>

@@ -41,6 +41,7 @@
 
 	leds {
 		compatible = "gpio-leds";
+		// status = "disabled";
 		out_led: led_0 {
 			gpios = <&gpiof 6 GPIO_ACTIVE_HIGH>;
 			label = "External LED out";
@@ -68,6 +69,7 @@
 	shock_sensor: shock_sensor {
 		compatible = "zephyr,shock-sensor";
 		status = "okay";
+		// status = "disabled";
 		io-channels = <&eadc 15>;
 		sampling-period-ms = <2>;
 		// sampling-period-ms = <10>;

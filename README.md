@@ -72,6 +72,14 @@ west build app --build-dir build-app -b fxa500_02
 west build app --build-dir build-app -b fxa500_02 -t flash
 ```
 
+Можна правити або безпосередньо файли device tree, або краший варіант - використати оверлеї.
+
+Ось як приклад, як можна збирати прошивку без датчика удару:
+
+```
+west build app --build-dir build-app -b fxa500_02 -p -- -DEXTRA_DTC_OVERLAY_FILE=no-shock-sensor.overlay
+```
+
 ### До речі. Під Windows та Linux, можна тестувати щось через натівну компіляцію
 
 ```bash
