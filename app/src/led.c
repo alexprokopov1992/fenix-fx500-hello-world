@@ -14,7 +14,7 @@ void led_thread_fun(void *dummy1, void *dummy2, void *dummy3)
 {
     while (1) {
         gpio_pin_toggle_dt(&led);
-        k_msleep(1000);
+        k_msleep(100);
     }
 }
 
