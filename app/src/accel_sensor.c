@@ -4,7 +4,7 @@
 #include <sensor/accel-sensor.h>
 
 
-#define ACCEL_NODE       DT_ALIAS(accel_sensor)
+#define ACCEL_NODE       DT_ALIAS(mma8652fc)
 
 static const struct device *dev = DEVICE_DT_GET(ACCEL_NODE);
 
@@ -18,6 +18,11 @@ const struct sensor_trigger trig_motion = {
     .chan = SENSOR_CHAN_ACCEL_XYZ,
     .type = SENSOR_TRIG_THRESHOLD,
 };
+
+static int test()
+{
+    return 1;
+}
 
 static int init()
 {
