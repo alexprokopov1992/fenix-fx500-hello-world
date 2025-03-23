@@ -40,7 +40,7 @@
 	};
 
 	accel_sensor: accel_sensor {
-		compatible = "badzen,accel-sensor";
+		compatible = "baden,accel-sensor";
 		status = "okay";
         accelerometer = &mma8652fc;
 	};
