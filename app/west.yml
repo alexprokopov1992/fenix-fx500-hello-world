@@ -53,6 +53,11 @@ manifest:
       url: https://github.com/baden/zephyr-shock-sensor-driver.git
       revision: main
 
+    - name: accel-sensor-driver
+      path: modules/accel-sensor-driver
+      url: https://github.com/baden/zephyr-accel-sensor.git
+      revision: main
+
 
   self:
     west-commands: scripts/west-commands.yml

@@ -24,7 +24,7 @@
 		// analog-inputs = &analog_inputs0;
 		// v12v = &v12v;
 		// shake-sensor = &shake_sensor;
-		// accelerometer = &mma8652fc;
+		accelerometer = &mma8652fc;
 
 		shock-sensor = &shock_sensor;
 	};
@@ -37,6 +37,12 @@
 		zephyr,code-partition = &code_partition;
 		zephyr,boot-partition = &boot_partition;
 		// zephyr,canbus = &canfd0;
+	};
+
+	accel_sensor: accel_sensor {
+		compatible = "badzen,accel-sensor";
+		status = "okay";
+        accelerometer = &mma8652fc;
 	};
 
 	leds {
@@ -390,20 +396,20 @@
 // 	};
 // };
 
-// &i2c1 {
-// 	status = "okay";
-// 	pinctrl-0 = <&i2c1_pa7_pa6>;
-// 	pinctrl-names = "default";
+&i2c1 {
+ 	status = "okay";
+ 	pinctrl-0 = <&i2c1_pa7_pa6>;
+ 	pinctrl-names = "default";
 
-// 	// Int on PC6/INT2
-// 	mma8652fc: mma8652fc@1d {
-// 		compatible = "nxp,fxos8700","nxp,mma8652fc";
-// 		reg = <0x1d>;
-// 		int1-gpios = <&gpioc 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-// 		// interrupt-parent = <&gpioc>;
-// 		// interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
-// 	};
-// };
+ 	// Int on PC6/INT2
+ 	mma8652fc: mma8652fc@1d {
+ 		compatible = "nxp,fxos8700","nxp,mma8652fc";
+ 		reg = <0x1d>;
+ 		int1-gpios = <&gpioc 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+ 		// interrupt-parent = <&gpioc>;
+ 		// interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
+ 	};
+ };
 
 // // &scc {
 // // 	/* For USB 1.1 Host/Device/OTG, configure to 192MHz, which can generate necessary 48MHz. */
