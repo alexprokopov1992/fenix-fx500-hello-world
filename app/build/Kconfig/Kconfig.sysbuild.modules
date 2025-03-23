@@ -1,0 +1,24 @@
+config ZEPHYR_APP_MODULE
+   bool
+   default y
+config ZEPHYR_M2354_MODULE
+   bool
+   default y
+config ZEPHYR_HAL_NUVOTON_MODULE
+   bool
+   default y
+config ZEPHYR_SHOCK_SENSOR_DRIVERS_MODULE
+   bool
+   default y
+config ZEPHYR_ZEPHYR_ACCEL_SENSOR_MODULE
+   bool
+   default y
+config ZEPHYR_CMSIS_MODULE
+   bool
+   default y
+config ZEPHYR_HAL_WCH_MODULE
+   bool
+   default y
+config ZEPHYR_LITTLEFS_MODULE
+   bool
+   default y

@@ -1,0 +1,27 @@
+empty_file.o: \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/misc/empty_file.c \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arm/armv8-m.dtsi \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common/skeleton.dtsi \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common/mem.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/pinctrl/numaker-m2354-pinctrl.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/clock/numaker_m2354_clock.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/reset/numaker_m2354_reset.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/adc/adc.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/dt-util.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_macro.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_loops.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_listify.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_is_eq.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_inc.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_dec.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_x2.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/gpio/gpio.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/i2c/i2c.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354-pinctrl.dtsi \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton/dts/pinctrl/m2354sjfae-pinctrl.h \
+ c:\users\gameon\sdk\fenix-fx500-hello-world\modules\hal\nuvoton\dts\m2354\sys_reg.h \
+ c:\users\gameon\sdk\fenix-fx500-hello-world\modules\hal\nuvoton\dts\m2354\sys.h \
+ C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/input/input-event-codes.h

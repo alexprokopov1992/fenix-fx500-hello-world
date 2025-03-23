@@ -1,0 +1,895 @@
+# 0 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/misc/empty_file.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts" 1
+
+
+
+
+
+
+/dts-v1/;
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 1 3 4
+
+
+
+
+
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arm/armv8-m.dtsi" 1 3 4
+
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common/skeleton.dtsi" 1 3 4
+# 9 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common/skeleton.dtsi" 3 4
+/ {
+ #address-cells = <1>;
+ #size-cells = <1>;
+ chosen { };
+ aliases { };
+};
+# 4 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arm/armv8-m.dtsi" 2 3 4
+
+/ {
+ soc {
+  #address-cells = <1>;
+  #size-cells = <1>;
+  compatible = "simple-bus";
+  interrupt-parent = <&nvic>;
+  ranges;
+
+  nvic: interrupt-controller@e000e100 {
+   #address-cells = <1>;
+   compatible = "arm,v8m-nvic";
+   reg = <0xe000e100 0xc00>;
+   interrupt-controller;
+   #interrupt-cells = <2>;
+  };
+
+  systick: timer@e000e010 {
+   compatible = "arm,armv8m-systick";
+   reg = <0xe000e010 0x10>;
+  };
+ };
+};
+# 8 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common/mem.h" 1 3 4
+# 10 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/pinctrl/numaker-m2354-pinctrl.h" 1 3 4
+# 11 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/clock/numaker_m2354_clock.h" 1 3 4
+# 12 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr/dt-bindings/reset/numaker_m2354_reset.h" 1 3 4
+# 13 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/adc/adc.h" 1 3 4
+# 9 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/adc/adc.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/dt-util.h" 1 3 4
+# 19 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/dt-util.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_macro.h" 1 3 4
+# 34 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_macro.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 1 3 4
+# 18 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_loops.h" 1 3 4
+# 1083 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_loops.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_listify.h" 1 3 4
+# 1084 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_loops.h" 2 3 4
+# 19 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 2 3 4
+# 162 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_is_eq.h" 1 3 4
+# 163 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 2 3 4
+# 193 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_inc.h" 1 3 4
+# 194 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 2 3 4
+
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_dec.h" 1 3 4
+# 197 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 2 3 4
+
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal_util_x2.h" 1 3 4
+# 200 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_internal.h" 2 3 4
+# 35 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/sys/util_macro.h" 2 3 4
+# 20 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/dt-util.h" 2 3 4
+# 10 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/adc/adc.h" 2 3 4
+# 14 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/gpio/gpio.h" 1 3 4
+# 15 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/i2c/i2c.h" 1 3 4
+# 16 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+
+/ {
+     chosen {
+         zephyr,flash-controller = &fmc;
+     };
+
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu@0 {
+            device_type = "cpu";
+            compatible = "arm,cortex-m23";
+            reg = <0>;
+        };
+    };
+# 61 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 3 4
+    sram0: memory@20000000 {
+     compatible = "mmio-sram";
+     reg = <0x20000000 ((256) * 1024)>;
+
+    };
+
+
+    sysclk: system-clock {
+        compatible = "fixed-clock";
+
+
+        clock-frequency = <6000000>;
+        #clock-cells = <0>;
+    };
+
+    soc {
+        scc: system-clock-controller@40000200 {
+            compatible = "nuvoton,numaker2-scc";
+            reg = <0x40000200 0x100>;
+            #clock-cells = <0>;
+
+
+
+
+
+
+            core-clock = <6000000>;
+
+            pcc: peripheral-clock-controller {
+                compatible = "nuvoton,numaker2-pcc";
+                #clock-cells = <3>;
+            };
+        };
+
+        rst: reset-controller@40000000 {
+            compatible = "nuvoton,numaker2-rst";
+            reg = <0x40000000 0x20>;
+            #reset-cells = <1>;
+            status = "okay";
+        };
+
+        fmc: flash-controller@4000c000 {
+            compatible = "nuvoton,numaker2-fmc";
+            reg = <0x4000c000 0x110>;
+            #address-cells = <1>;
+            #size-cells = <1>;
+
+            flash0: flash@0 {
+                compatible = "soc-nv-flash";
+                reg = <0 ((1024) * 1024)>;
+                erase-block-size = <2048>;
+                write-block-size = <4>;
+            };
+        };
+
+        uart0: serial@40070000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40070000 0x1000>;
+            interrupts = <36 0>;
+            resets = <&rst ((0x4UL<<24) | (16))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((16)) & 0x1fUL) << 0)| (((2UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((16UL) & 0x1fUL) << 20)| (((0UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((8UL) & 0x1fUL) << 5)) (0x3UL << (16))
+                   (((1)-1UL) << (8))>;
+            status = "disabled";
+        };
+
+        uart1: serial@40071000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40071000 0x1000>;
+            interrupts = <37 0>;
+            resets = <&rst ((0x4UL<<24) | (17))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((17)) & 0x1fUL) << 0)| (((2UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((20UL) & 0x1fUL) << 20)| (((0UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((12UL) & 0x1fUL) << 5)) (0x3UL << (20))
+                   (((1)-1UL) << (12))>;
+            status = "disabled";
+        };
+
+        uart2: serial@40072000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40072000 0x1000>;
+            interrupts = <48 0>;
+            resets = <&rst ((0x4UL<<24) | (18))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((18)) & 0x1fUL) << 0)| (((2UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((24UL) & 0x1fUL) << 20)| (((3UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((0UL) & 0x1fUL) << 5)) (0x3UL << (24))
+                   (((1)-1UL) << (0))>;
+            status = "disabled";
+        };
+
+        uart3: serial@40073000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40073000 0x1000>;
+            interrupts = <49 0>;
+            resets = <&rst ((0x4UL<<24) | (19))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((19)) & 0x1fUL) << 0)| (((2UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((28UL) & 0x1fUL) << 20)| (((3UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((4UL) & 0x1fUL) << 5)) (0x3UL << (28))
+                   (((1)-1UL) << (4))>;
+
+            status = "disabled";
+        };
+
+        uart4: serial@40074000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40074000 0x1000>;
+            interrupts = <74 0>;
+            resets = <&rst ((0x4UL<<24) | (20))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((20)) & 0x1fUL) << 0)| (((3UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((24UL) & 0x1fUL) << 20)| (((3UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((8UL) & 0x1fUL) << 5)) (0x3UL << (24))
+                   (((1)-1UL) << (8))>;
+            status = "disabled";
+        };
+
+        uart5: serial@40075000 {
+            compatible = "nuvoton,numaker2-uart";
+            reg = <0x40075000 0x1000>;
+            interrupts = <75 0>;
+            resets = <&rst ((0x4UL<<24) | (21))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((21)) & 0x1fUL) << 0)| (((3UL) & 0x03UL) << 28)|(((7UL) & 0x07UL) << 25)|(((28UL) & 0x1fUL) << 20)| (((3UL) & 0x03UL) << 18)|(((0x0FUL) & 0xffUL) << 10)|(((12UL) & 0x1fUL) << 5)) (0x3UL << (28))
+                   (((1)-1UL) << (12))>;
+            status = "disabled";
+        };
+
+        pinctrl: pin-controller@40000080 {
+            compatible = "nuvoton,numaker2-pinctrl";
+            reg = <0x40000080 0x20
+                   0x40000030 0x40>;
+            reg-names = "mfos", "mfp";
+            status = "okay";
+        };
+
+        gpioa: gpio@40004000 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004000 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((24)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <16 2>;
+        };
+
+        gpiob: gpio@40004040 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004040 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((25)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <17 2>;
+        };
+
+        gpioc: gpio@40004080 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004080 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((26)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <18 2>;
+        };
+
+        gpiod: gpio@400040c0 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x400040c0 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((27)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <19 2>;
+        };
+
+        gpioe: gpio@40004100 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004100 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((28)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <20 2>;
+        };
+
+        gpiof: gpio@40004140 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004140 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((29)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <21 2>;
+        };
+
+        gpiog: gpio@40004180 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x40004180 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((30)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <72 2>;
+        };
+
+        gpioh: gpio@400041c0 {
+            compatible = "nuvoton,numaker2-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            reg = <0x400041c0 0x40>;
+            clocks = <&pcc ((((0UL) & 0x03UL) << 30)|((((31)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+            status = "disabled";
+            interrupts = <88 2>;
+        };
+
+        spi0: spi@40061000 {
+            compatible = "nuvoton,numaker2-spi";
+            reg = <0x40061000 0x6c>;
+            interrupts = <23 0>;
+            resets = <&rst ((0x4UL<<24) | (13))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((13)) & 0x1fUL) << 0) | (((2UL) & 0x03UL) << 28)|(((3UL) & 0x07UL) << 25)|(((4UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x3UL << (4)) 0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "disabled";
+        };
+
+        spi1: spi@40062000 {
+            compatible = "nuvoton,numaker2-spi";
+            reg = <0x40062000 0x6c>;
+            interrupts = <51 0>;
+            resets = <&rst ((0x4UL<<24) | (14))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((14)) & 0x1fUL) << 0) | (((2UL) & 0x03UL) << 28)|(((3UL) & 0x07UL) << 25)|(((6UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x3UL << (6)) 0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "disabled";
+        };
+
+        spi2: spi@40063000 {
+            compatible = "nuvoton,numaker2-spi";
+            reg = <0x40063000 0x6c>;
+            interrupts = <52 0>;
+            resets = <&rst ((0x4UL<<24) | (15))>;
+            clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((15)) & 0x1fUL) << 0) | (((2UL) & 0x03UL) << 28)|(((3UL) & 0x07UL) << 25)|(((10UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x3UL << (10)) 0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "disabled";
+        };
+
+        spi3: spi@40064000 {
+            compatible = "nuvoton,numaker2-spi";
+            reg = <0x40064000 0x6c>;
+            interrupts = <62 0>;
+            resets = <&rst ((0x8UL<<24) | (6))>;
+            clocks = <&pcc ((((2UL) & 0x03UL) << 30)|((((6)) & 0x1fUL) << 0) | (((2UL) & 0x03UL) << 28)|(((3UL) & 0x07UL) << 25)|(((12UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x3UL << (12)) 0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "disabled";
+        };
+
+
+
+
+
+
+        i2c0: i2c@40080000 {
+            compatible = "nuvoton,numaker2-i2c";
+
+
+
+
+
+
+
+   compatible = "nuvoton,numaker2-i2c";
+   clock-frequency = <100000>;
+   reg = <0x40080000 0x1000>;
+   interrupts = <38 0>;
+   resets = <&rst ((0x4UL<<24) | (8))>;
+   clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((8)) & 0x1fUL) << 0) | (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+        };
+
+  i2c1: i2c@40081000 {
+   compatible = "nuvoton,numaker2-i2c";
+   clock-frequency = <100000>;
+   reg = <0x40081000 0x1000>;
+   interrupts = <39 0>;
+   resets = <&rst ((0x4UL<<24) | (9))>;
+   clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((9)) & 0x1fUL) << 0) | (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+  i2c2: i2c@40082000 {
+   compatible = "nuvoton,numaker2-i2c";
+   clock-frequency = <100000>;
+   reg = <0x40082000 0x1000>;
+   interrupts = <82 0>;
+   resets = <&rst ((0x4UL<<24) | (10))>;
+   clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((10)) & 0x1fUL) << 0) | (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) 0 0>;
+   status = "disabled";
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+
+        epwm0: epwm@40058000 {
+            compatible = "nuvoton,numaker2-pwm";
+            reg = <0x40058000 0x37c>;
+            interrupts = <25 0>, <26 0>, <27 0>;
+            interrupt-names = "pair0", "pair1", "pair2";
+            resets = <&rst ((0x8UL<<24) | (16))>;
+            prescaler = <19>;
+            clocks = <&pcc ((((2UL) & 0x03UL) << 30)|((((16)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x1UL << (0)) 0>;
+            #pwm-cells = <3>;
+            status = "disabled";
+        };
+
+        epwm1: epwm@40059000 {
+            compatible = "nuvoton,numaker2-pwm";
+            reg = <0x40059000 0x37c>;
+            interrupts = <29 0>, <30 0>, <31 0>;
+            interrupt-names = "pair0", "pair1", "pair2";
+            resets = <&rst ((0x8UL<<24) | (17))>;
+            prescaler = <19>;
+            clocks = <&pcc ((((2UL) & 0x03UL) << 30)|((((17)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0x0UL) & 0x03UL) << 18)|(((0x0UL) & 0xffUL) << 10)|(((0x0UL) & 0x1fUL) << 5)) (0x1UL << (1)) 0>;
+            #pwm-cells = <3>;
+            status = "disabled";
+        };
+
+        eadc: eadc@40043000 {
+   compatible = "nuvoton,numaker2-adc";
+   reg = <0x40043000 0xffc>;
+   interrupts = <42 0>;
+   resets = <&rst ((0x4UL<<24) | (28))>;
+
+   clocks = <&pcc ((((1UL) & 0x03UL) << 30)|((((28)) & 0x1fUL) << 0)| (((0x0UL) & 0x03UL) << 28)|(((0x0UL) & 0x07UL) << 25)|(((0x0UL) & 0x1fUL) << 20)| (((0UL) & 0x03UL) << 18)|(((0xFFUL) & 0xffUL) << 10)|(((16UL) & 0x1fUL) << 5)) 0 (((1)-1UL) << (16))>;
+
+   channels = <16>;
+   status = "disabled";
+   #io-channel-cells = <1>;
+  };
+
+    };
+};
+
+&nvic {
+    arm,num-irq-priority-bits = <2>;
+};
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354-pinctrl.dtsi" 1 3 4
+
+
+
+
+
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton/dts/pinctrl/m2354sjfae-pinctrl.h" 1 3 4
+
+
+
+
+
+
+# 1 "c:\\users\\gameon\\sdk\\fenix-fx500-hello-world\\modules\\hal\\nuvoton\\dts\\m2354\\sys_reg.h" 1 3 4
+# 8 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton/dts/pinctrl/m2354sjfae-pinctrl.h" 2 3 4
+# 1 "c:\\users\\gameon\\sdk\\fenix-fx500-hello-world\\modules\\hal\\nuvoton\\dts\\m2354\\sys.h" 1 3 4
+# 9 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton/dts/pinctrl/m2354sjfae-pinctrl.h" 2 3 4
+# 8 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354-pinctrl.dtsi" 2 3 4
+
+
+&pinctrl {
+
+
+
+    /omit-if-no-ref/ uart3_pc2_pc3: uart3_pc2_pc3 {
+        group0 {
+            pinmux = <(((('C') - 'A') << 28)| ((2) << 24) | (((0xBUL<<(8))) >> ((2 % 8) * 4)))>, <(((('C') - 'A') << 28)| ((3) << 24) | (((0xBUL<<(12))) >> ((3 % 8) * 4)))>;
+        };
+    };
+
+    /omit-if-no-ref/ uart5_pa4_pa5: uart3_pa4_pa5 {
+        group0 {
+            pinmux = <(((('A') - 'A') << 28)| ((4) << 24) | (((0x8UL<<(16))) >> ((4 % 8) * 4)))>, <(((('A') - 'A') << 28)| ((5) << 24) | (((0x8UL<<(20))) >> ((5 % 8) * 4)))>;
+        };
+    };
+
+    /omit-if-no-ref/ uart3_pb15_pb14: uart3_pb15_pb14 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((14) << 24) | (((0x7UL<<(24))) >> ((14 % 8) * 4)))>, <(((('B') - 'A') << 28)| ((15) << 24) | (((0x7UL<<(28))) >> ((15 % 8) * 4)))>;
+        };
+    };
+
+
+
+    /omit-if-no-ref/ eadc_pb0: eadc_pb0 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((0) << 24) | (((0x1UL<<(0))) >> ((0 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb1: eadc_pb1 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((1) << 24) | (((0x1UL<<(4))) >> ((1 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb2: eadc_pb2 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((2) << 24) | (((0x1UL<<(8))) >> ((2 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb3: eadc_pb3 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((3) << 24) | (((0x1UL<<(12))) >> ((3 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb4: eadc_pb4 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((4) << 24) | (((0x1UL<<(16))) >> ((4 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb5: eadc_pb5 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((5) << 24) | (((0x1UL<<(20))) >> ((5 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb6: eadc_pb6 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((6) << 24) | (((0x1UL<<(24))) >> ((6 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb7: eadc_pb7 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((7) << 24) | (((0x1UL<<(28))) >> ((7 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb8: eadc_pb8 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((8) << 24) | (((0x1UL<<(0))) >> ((8 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb9: eadc_pb9 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((9) << 24) | (((0x1UL<<(4))) >> ((9 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb10: eadc_pb10 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((10) << 24) | (((0x1UL<<(8))) >> ((10 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb11: eadc_pb11 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((11) << 24) | (((0x1UL<<(12))) >> ((11 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb12: eadc_pb12 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((12) << 24) | (((0x1UL<<(16))) >> ((12 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb13: eadc_pb13 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((13) << 24) | (((0x1UL<<(20))) >> ((13 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb14: eadc_pb14 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((14) << 24) | (((0x1UL<<(24))) >> ((14 % 8) * 4)))>;
+        };
+    };
+    /omit-if-no-ref/ eadc_pb15: eadc_pb15 {
+        group0 {
+            pinmux = <(((('B') - 'A') << 28)| ((15) << 24) | (((0x1UL<<(28))) >> ((15 % 8) * 4)))>;
+        };
+    };
+
+
+
+
+    /omit-if-no-ref/ spi2_pa9_pa8_pa10: spi2_pa9_pa8_pa10 {
+        group0 {
+            pinmux = <(((('A') - 'A') << 28)| ((9) << 24) | (((0x4UL<<(4))) >> ((9 % 8) * 4)))>, <(((('A') - 'A') << 28)| ((8) << 24) | (((0x4UL<<(0))) >> ((8 % 8) * 4)))>, <(((('A') - 'A') << 28)| ((10) << 24) | (((0x4UL<<(8))) >> ((10 % 8) * 4)))>;
+        };
+    };
+
+
+    /omit-if-no-ref/ i2c1_pa7_pa6: i2c1_pa7_pa6 {
+        group0 {
+
+
+            pinmux = <(((('A') - 'A') << 28)| ((7) << 24) | (((0x8UL<<(28))) >> ((7 % 8) * 4)))>, <(((('A') - 'A') << 28)| ((6) << 24) | (((0x8UL<<(24))) >> ((6 % 8) * 4)))>;
+        };
+    };
+# 168 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354-pinctrl.dtsi" 3 4
+};
+# 403 "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm/nuvoton/m2354.dtsi" 2 3 4
+# 10 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts" 2
+
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr/dt-bindings/input/input-event-codes.h" 1 3 4
+# 12 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts" 2
+
+/ {
+ model = "Nuvoton PFM M467 board";
+ compatible = "nuvoton,pfm-m467", "nuvoton,m2354";
+
+ aliases {
+  led0 = &out_led;
+
+
+
+  adc0 = &eadc;
+
+
+
+
+  shock-sensor = &shock_sensor;
+ };
+
+ chosen {
+  zephyr,console = &uart3;
+  zephyr,shell-uart = &uart3;
+  zephyr,sram = &sram0;
+  zephyr,flash = &flash0;
+  zephyr,code-partition = &code_partition;
+  zephyr,boot-partition = &boot_partition;
+
+ };
+
+ leds {
+  compatible = "gpio-leds";
+
+  out_led: led_0 {
+   gpios = <&gpiof 6 (0 << 0)>;
+   label = "External LED out";
+  };
+ };
+# 67 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+ shock_sensor: shock_sensor {
+  compatible = "zephyr,shock-sensor";
+  status = "okay";
+
+  io-channels = <&eadc 15>;
+  sampling-period-ms = <2>;
+
+ };
+# 141 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+ zephyr,user {
+# 167 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+ };
+# 196 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+};
+
+&eadc {
+ #address-cells = <1>;
+ #size-cells = <0>;
+ status = "okay";
+
+
+ channel@14 {
+  reg = <14>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@13 {
+  reg = <13>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@12 {
+  reg = <12>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@11 {
+  reg = <11>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@10 {
+  reg = <10>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@9 {
+  reg = <9>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@8 {
+  reg = <8>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@7 {
+  reg = <7>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@6 {
+  reg = <6>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ channel@15 {
+  reg = <15>;
+  zephyr,gain = "ADC_GAIN_1";
+  zephyr,reference = "ADC_REF_INTERNAL";
+  zephyr,acquisition-time = <0>;
+  zephyr,resolution = <12>;
+
+  zephyr,vref-mv = <3300>;
+ };
+
+
+ pinctrl-0 = <
+  &eadc_pb14
+  &eadc_pb13
+  &eadc_pb12
+  &eadc_pb11
+  &eadc_pb10
+  &eadc_pb9
+  &eadc_pb8
+  &eadc_pb7
+  &eadc_pb6
+  &eadc_pb15
+ >;
+ pinctrl-names = "default";
+# 342 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+};
+# 391 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+&i2c1 {
+  status = "okay";
+  pinctrl-0 = <&i2c1_pa7_pa6>;
+  pinctrl-names = "default";
+
+
+  mma8652fc: mma8652fc@1d {
+    compatible = "nxp,fxos8700","nxp,mma8652fc";
+    reg = <0x1d>;
+    int1-gpios = <&gpioc 6 ((1 << 0) | (1 << 4))>;
+
+
+
+    accel_sensor: accel_sensor {
+      compatible = "zephyr,accel-sensor";
+      sampling-period-ms = <1000>;
+      status = "okay";
+    };
+
+  };
+};
+# 420 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+&gpioa {
+ status = "okay";
+};
+
+&gpiob {
+ status = "okay";
+};
+
+&gpioc {
+ status = "okay";
+};
+
+&gpiod {
+ status = "okay";
+};
+
+&gpiof {
+ status = "okay";
+};
+
+&flash0 {
+ partitions {
+  compatible = "fixed-partitions";
+  #address-cells = <1>;
+  #size-cells = <1>;
+# 457 "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts"
+  code_partition: partition@0 {
+   label = "image-0";
+   reg = <0x00000000 ((512) * 1024)>;
+  };
+
+
+
+  storage_partition_tpf: partition@80000 {
+   label = "storage_tpf";
+   reg = <0x80000 ((16) * 1024)>;
+  };
+
+
+
+
+
+
+  storage_partition_nvs: partition@84000 {
+   label = "storage_nvs";
+   reg = <0x84000 ((16) * 1024)>;
+  };
+
+
+  storage_partition_nvs2: partition@88000 {
+   label = "storage_partition_nvs2";
+   reg = <0x88000 ((64) * 1024)>;
+  };
+
+
+  storage_partition_pc_public_key: partition@98000 {
+   label = "storage_pc_public_key";
+   reg = <0x98000 ((16) * 1024)>;
+  };
+
+
+  storage_partition_unused: partition@9C000 {
+   label = "storage_partition_unused";
+   reg = <0x9C000 ((352) * 1024)>;
+  };
+
+
+  boot_partition: partition@F4000 {
+   label = "bootloader";
+   reg = <(((1024) * 1024) - ((48) * 1024)) ((48) * 1024)>;
+  };
+ };
+};
+
+&uart3 {
+ current-speed = <115200>;
+ pinctrl-0 = <&uart3_pc2_pc3>;
+ pinctrl-names = "default";
+ status = "okay";
+};
+# 0 "<command-line>" 2
+# 1 "C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/misc/empty_file.c"

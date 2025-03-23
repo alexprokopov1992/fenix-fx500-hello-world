@@ -1,0 +1,14 @@
+# WARNING. THIS FILE IS AUTO-GENERATED. DO NOT MODIFY!
+#
+# This file contains build system settings derived from your modules.
+#
+# Modules may be set via ZEPHYR_MODULES, ZEPHYR_EXTRA_MODULES,
+# and/or the west manifest file.
+#
+# See the Modules guide for more information.
+"BOARD_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/app"
+"DTS_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354"
+"SOC_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354"
+"DTS_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton"
+"DTS_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/shock-sensor-driver"
+"DTS_ROOT":"C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/accel-sensor-driver"

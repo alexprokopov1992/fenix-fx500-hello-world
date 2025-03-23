@@ -1,0 +1,42 @@
+config ZEPHYR_APP_MODULE
+	bool
+	default y
+menu "m2354 (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354)"
+osource "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/Kconfig"
+config ZEPHYR_M2354_MODULE
+	bool
+	default y
+endmenu
+config ZEPHYR_HAL_NUVOTON_MODULE
+	bool
+	default y
+menu "shock_sensor_drivers (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/shock-sensor-driver)"
+osource "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/shock-sensor-driver/Kconfig"
+config ZEPHYR_SHOCK_SENSOR_DRIVERS_MODULE
+	bool
+	default y
+endmenu
+menu "zephyr_accel_sensor (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/accel-sensor-driver)"
+osource "C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/accel-sensor-driver/Kconfig"
+config ZEPHYR_ZEPHYR_ACCEL_SENSOR_MODULE
+	bool
+	default y
+endmenu
+menu "cmsis (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/cmsis)"
+osource "$(ZEPHYR_CMSIS_KCONFIG)"
+config ZEPHYR_CMSIS_MODULE
+	bool
+	default y
+endmenu
+menu "hal_wch (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/wch)"
+osource "$(ZEPHYR_HAL_WCH_KCONFIG)"
+config ZEPHYR_HAL_WCH_MODULE
+	bool
+	default y
+endmenu
+menu "littlefs (C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/fs/littlefs)"
+osource "$(ZEPHYR_LITTLEFS_KCONFIG)"
+config ZEPHYR_LITTLEFS_MODULE
+	bool
+	default y
+endmenu

@@ -1,0 +1,56 @@
+cmake:
+  application:
+    configuration-dir: C:/Users/GameON/sdk/fenix-fx500-hello-world/app
+    source-dir: C:/Users/GameON/sdk/fenix-fx500-hello-world/app
+  board:
+    name: fxa500_02
+    path:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02
+    qualifiers: m2354
+    revision: 
+  devicetree:
+    bindings-dirs:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/bindings
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/shock-sensor-driver/dts/bindings
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/accel-sensor-driver/dts/bindings
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/bindings
+    files:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02.dts
+    include-dirs:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/include/zephyr
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts/arm
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/zephyr/soc/nuvoton/m2354/dts
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/hal/nuvoton/dts
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/shock-sensor-driver/dts
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/modules/accel-sensor-driver/dts
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/include/zephyr
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/common
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/x86
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/xtensa
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/sparc
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/riscv
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/posix
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/nios2
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arm64
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arm
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts/arc
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr/dts
+  kconfig:
+    files:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/fxa500_02_defconfig
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/app/prj.conf
+    user-files:
+     - C:/Users/GameON/sdk/fenix-fx500-hello-world/app/prj.conf
+  toolchain:
+    name: zephyr
+    path: C:/Users/GameON/zephyr-sdk-0.17.0
+  zephyr:
+    version: 4.1.0
+    zephyr-base: C:/Users/GameON/sdk/fenix-fx500-hello-world/zephyr
+version: 0.1.0
+west:
+  command: C:\Users\GameON\sdk\fenix-fx500-hello-world\.venv\Scripts\west build -b fxa500_02 -t menuconfig
+  topdir: C:\Users\GameON\sdk\fenix-fx500-hello-world
+  version: 1.3.0

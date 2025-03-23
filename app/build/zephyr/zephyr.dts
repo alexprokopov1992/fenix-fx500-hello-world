@@ -1,0 +1,543 @@
+/dts-v1/;
+
+/ {
+	#address-cells = < 0x1 >;
+	#size-cells = < 0x1 >;
+	model = "Nuvoton PFM M467 board";
+	compatible = "nuvoton,pfm-m467", "nuvoton,m2354";
+	chosen {
+		zephyr,flash-controller = &fmc;
+		zephyr,console = &uart3;
+		zephyr,shell-uart = &uart3;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &code_partition;
+		zephyr,boot-partition = &boot_partition;
+	};
+	aliases {
+		led0 = &out_led;
+		adc0 = &eadc;
+		shock-sensor = &shock_sensor;
+	};
+	soc {
+		#address-cells = < 0x1 >;
+		#size-cells = < 0x1 >;
+		compatible = "simple-bus";
+		interrupt-parent = < &nvic >;
+		ranges;
+		nvic: interrupt-controller@e000e100 {
+			#address-cells = < 0x1 >;
+			compatible = "arm,v8m-nvic";
+			reg = < 0xe000e100 0xc00 >;
+			interrupt-controller;
+			#interrupt-cells = < 0x2 >;
+			arm,num-irq-priority-bits = < 0x2 >;
+			phandle = < 0x1 >;
+		};
+		systick: timer@e000e010 {
+			compatible = "arm,armv8m-systick";
+			reg = < 0xe000e010 0x10 >;
+		};
+		scc: system-clock-controller@40000200 {
+			compatible = "nuvoton,numaker2-scc";
+			reg = < 0x40000200 0x100 >;
+			#clock-cells = < 0x0 >;
+			core-clock = < 0x5b8d80 >;
+			pcc: peripheral-clock-controller {
+				compatible = "nuvoton,numaker2-pcc";
+				#clock-cells = < 0x3 >;
+				phandle = < 0x3 >;
+			};
+		};
+		rst: reset-controller@40000000 {
+			compatible = "nuvoton,numaker2-rst";
+			reg = < 0x40000000 0x20 >;
+			#reset-cells = < 0x1 >;
+			status = "okay";
+			phandle = < 0x2 >;
+		};
+		fmc: flash-controller@4000c000 {
+			compatible = "nuvoton,numaker2-fmc";
+			reg = < 0x4000c000 0x110 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x1 >;
+			flash0: flash@0 {
+				compatible = "soc-nv-flash";
+				reg = < 0x0 0x100000 >;
+				erase-block-size = < 0x800 >;
+				write-block-size = < 0x4 >;
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = < 0x1 >;
+					#size-cells = < 0x1 >;
+					code_partition: partition@0 {
+						label = "image-0";
+						reg = < 0x0 0x80000 >;
+					};
+					storage_partition_tpf: partition@80000 {
+						label = "storage_tpf";
+						reg = < 0x80000 0x4000 >;
+					};
+					storage_partition_nvs: partition@84000 {
+						label = "storage_nvs";
+						reg = < 0x84000 0x4000 >;
+					};
+					storage_partition_nvs2: partition@88000 {
+						label = "storage_partition_nvs2";
+						reg = < 0x88000 0x10000 >;
+					};
+					storage_partition_pc_public_key: partition@98000 {
+						label = "storage_pc_public_key";
+						reg = < 0x98000 0x4000 >;
+					};
+					storage_partition_unused: partition@9C000 {
+						label = "storage_partition_unused";
+						reg = < 0x9c000 0x58000 >;
+					};
+					boot_partition: partition@F4000 {
+						label = "bootloader";
+						reg = < 0xf4000 0xc000 >;
+					};
+				};
+			};
+		};
+		uart0: serial@40070000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40070000 0x1000 >;
+			interrupts = < 0x24 0x0 >;
+			resets = < &rst 0x4000010 >;
+			clocks = < &pcc 0x6f003d10 0x30000 0x0 >;
+			status = "disabled";
+		};
+		uart1: serial@40071000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40071000 0x1000 >;
+			interrupts = < 0x25 0x0 >;
+			resets = < &rst 0x4000011 >;
+			clocks = < &pcc 0x6f403d91 0x300000 0x0 >;
+			status = "disabled";
+		};
+		uart2: serial@40072000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40072000 0x1000 >;
+			interrupts = < 0x30 0x0 >;
+			resets = < &rst 0x4000012 >;
+			clocks = < &pcc 0x6f8c3c12 0x3000000 0x0 >;
+			status = "disabled";
+		};
+		uart3: serial@40073000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40073000 0x1000 >;
+			interrupts = < 0x31 0x0 >;
+			resets = < &rst 0x4000013 >;
+			clocks = < &pcc 0x6fcc3c93 0x30000000 0x0 >;
+			status = "okay";
+			current-speed = < 0x1c200 >;
+			pinctrl-0 = < &uart3_pc2_pc3 >;
+			pinctrl-names = "default";
+		};
+		uart4: serial@40074000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40074000 0x1000 >;
+			interrupts = < 0x4a 0x0 >;
+			resets = < &rst 0x4000014 >;
+			clocks = < &pcc 0x7f8c3d14 0x3000000 0x0 >;
+			status = "disabled";
+		};
+		uart5: serial@40075000 {
+			compatible = "nuvoton,numaker2-uart";
+			reg = < 0x40075000 0x1000 >;
+			interrupts = < 0x4b 0x0 >;
+			resets = < &rst 0x4000015 >;
+			clocks = < &pcc 0x7fcc3d95 0x30000000 0x0 >;
+			status = "disabled";
+		};
+		pinctrl: pin-controller@40000080 {
+			compatible = "nuvoton,numaker2-pinctrl";
+			reg = < 0x40000080 0x20 0x40000030 0x40 >;
+			reg-names = "mfos", "mfp";
+			status = "okay";
+			uart3_pc2_pc3: uart3_pc2_pc3 {
+				phandle = < 0x4 >;
+				group0 {
+					pinmux = < 0x2200000b >, < 0x2300000b >;
+				};
+			};
+			eadc_pb6: eadc_pb6 {
+				phandle = < 0xf >;
+				group0 {
+					pinmux = < 0x16000001 >;
+				};
+			};
+			eadc_pb7: eadc_pb7 {
+				phandle = < 0xe >;
+				group0 {
+					pinmux = < 0x17000001 >;
+				};
+			};
+			eadc_pb8: eadc_pb8 {
+				phandle = < 0xd >;
+				group0 {
+					pinmux = < 0x18000001 >;
+				};
+			};
+			eadc_pb9: eadc_pb9 {
+				phandle = < 0xc >;
+				group0 {
+					pinmux = < 0x19000001 >;
+				};
+			};
+			eadc_pb10: eadc_pb10 {
+				phandle = < 0xb >;
+				group0 {
+					pinmux = < 0x1a000001 >;
+				};
+			};
+			eadc_pb11: eadc_pb11 {
+				phandle = < 0xa >;
+				group0 {
+					pinmux = < 0x1b000001 >;
+				};
+			};
+			eadc_pb12: eadc_pb12 {
+				phandle = < 0x9 >;
+				group0 {
+					pinmux = < 0x1c000001 >;
+				};
+			};
+			eadc_pb13: eadc_pb13 {
+				phandle = < 0x8 >;
+				group0 {
+					pinmux = < 0x1d000001 >;
+				};
+			};
+			eadc_pb14: eadc_pb14 {
+				phandle = < 0x7 >;
+				group0 {
+					pinmux = < 0x1e000001 >;
+				};
+			};
+			eadc_pb15: eadc_pb15 {
+				phandle = < 0x10 >;
+				group0 {
+					pinmux = < 0x1f000001 >;
+				};
+			};
+			i2c1_pa7_pa6: i2c1_pa7_pa6 {
+				phandle = < 0x5 >;
+				group0 {
+					pinmux = < 0x7000008 >, < 0x6000008 >;
+				};
+			};
+		};
+		gpioa: gpio@40004000 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004000 0x40 >;
+			clocks = < &pcc 0x18 0x0 0x0 >;
+			status = "okay";
+			interrupts = < 0x10 0x2 >;
+		};
+		gpiob: gpio@40004040 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004040 0x40 >;
+			clocks = < &pcc 0x19 0x0 0x0 >;
+			status = "okay";
+			interrupts = < 0x11 0x2 >;
+		};
+		gpioc: gpio@40004080 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004080 0x40 >;
+			clocks = < &pcc 0x1a 0x0 0x0 >;
+			status = "okay";
+			interrupts = < 0x12 0x2 >;
+			phandle = < 0x6 >;
+		};
+		gpiod: gpio@400040c0 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x400040c0 0x40 >;
+			clocks = < &pcc 0x1b 0x0 0x0 >;
+			status = "okay";
+			interrupts = < 0x13 0x2 >;
+		};
+		gpioe: gpio@40004100 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004100 0x40 >;
+			clocks = < &pcc 0x1c 0x0 0x0 >;
+			status = "disabled";
+			interrupts = < 0x14 0x2 >;
+		};
+		gpiof: gpio@40004140 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004140 0x40 >;
+			clocks = < &pcc 0x1d 0x0 0x0 >;
+			status = "okay";
+			interrupts = < 0x15 0x2 >;
+			phandle = < 0x11 >;
+		};
+		gpiog: gpio@40004180 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x40004180 0x40 >;
+			clocks = < &pcc 0x1e 0x0 0x0 >;
+			status = "disabled";
+			interrupts = < 0x48 0x2 >;
+		};
+		gpioh: gpio@400041c0 {
+			compatible = "nuvoton,numaker2-gpio";
+			gpio-controller;
+			#gpio-cells = < 0x2 >;
+			reg = < 0x400041c0 0x40 >;
+			clocks = < &pcc 0x1f 0x0 0x0 >;
+			status = "disabled";
+			interrupts = < 0x58 0x2 >;
+		};
+		spi0: spi@40061000 {
+			compatible = "nuvoton,numaker2-spi";
+			reg = < 0x40061000 0x6c >;
+			interrupts = < 0x17 0x0 >;
+			resets = < &rst 0x400000d >;
+			clocks = < &pcc 0x6640000d 0x30 0x0 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			status = "disabled";
+		};
+		spi1: spi@40062000 {
+			compatible = "nuvoton,numaker2-spi";
+			reg = < 0x40062000 0x6c >;
+			interrupts = < 0x33 0x0 >;
+			resets = < &rst 0x400000e >;
+			clocks = < &pcc 0x6660000e 0xc0 0x0 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			status = "disabled";
+		};
+		spi2: spi@40063000 {
+			compatible = "nuvoton,numaker2-spi";
+			reg = < 0x40063000 0x6c >;
+			interrupts = < 0x34 0x0 >;
+			resets = < &rst 0x400000f >;
+			clocks = < &pcc 0x66a0000f 0xc00 0x0 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			status = "disabled";
+		};
+		spi3: spi@40064000 {
+			compatible = "nuvoton,numaker2-spi";
+			reg = < 0x40064000 0x6c >;
+			interrupts = < 0x3e 0x0 >;
+			resets = < &rst 0x8000006 >;
+			clocks = < &pcc 0xa6c00006 0x3000 0x0 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			status = "disabled";
+		};
+		i2c0: i2c@40080000 {
+			compatible = "nuvoton,numaker2-i2c";
+			clock-frequency = < 0x186a0 >;
+			reg = < 0x40080000 0x1000 >;
+			interrupts = < 0x26 0x0 >;
+			resets = < &rst 0x4000008 >;
+			clocks = < &pcc 0x40000008 0x0 0x0 >;
+			status = "disabled";
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+		};
+		i2c1: i2c@40081000 {
+			compatible = "nuvoton,numaker2-i2c";
+			clock-frequency = < 0x186a0 >;
+			reg = < 0x40081000 0x1000 >;
+			interrupts = < 0x27 0x0 >;
+			resets = < &rst 0x4000009 >;
+			clocks = < &pcc 0x40000009 0x0 0x0 >;
+			status = "okay";
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			pinctrl-0 = < &i2c1_pa7_pa6 >;
+			pinctrl-names = "default";
+			mma8652fc: mma8652fc@1d {
+				compatible = "nxp,fxos8700", "nxp,mma8652fc";
+				reg = < 0x1d >;
+				int1-gpios = < &gpioc 0x6 0x11 >;
+				accel_sensor: accel_sensor {
+					compatible = "zephyr,accel-sensor";
+					sampling-period-ms = < 0x3e8 >;
+					status = "okay";
+				};
+			};
+		};
+		i2c2: i2c@40082000 {
+			compatible = "nuvoton,numaker2-i2c";
+			clock-frequency = < 0x186a0 >;
+			reg = < 0x40082000 0x1000 >;
+			interrupts = < 0x52 0x0 >;
+			resets = < &rst 0x400000a >;
+			clocks = < &pcc 0x4000000a 0x0 0x0 >;
+			status = "disabled";
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+		};
+		epwm0: epwm@40058000 {
+			compatible = "nuvoton,numaker2-pwm";
+			reg = < 0x40058000 0x37c >;
+			interrupts = < 0x19 0x0 >, < 0x1a 0x0 >, < 0x1b 0x0 >;
+			interrupt-names = "pair0", "pair1", "pair2";
+			resets = < &rst 0x8000010 >;
+			prescaler = < 0x13 >;
+			clocks = < &pcc 0x80000010 0x1 0x0 >;
+			#pwm-cells = < 0x3 >;
+			status = "disabled";
+		};
+		epwm1: epwm@40059000 {
+			compatible = "nuvoton,numaker2-pwm";
+			reg = < 0x40059000 0x37c >;
+			interrupts = < 0x1d 0x0 >, < 0x1e 0x0 >, < 0x1f 0x0 >;
+			interrupt-names = "pair0", "pair1", "pair2";
+			resets = < &rst 0x8000011 >;
+			prescaler = < 0x13 >;
+			clocks = < &pcc 0x80000011 0x2 0x0 >;
+			#pwm-cells = < 0x3 >;
+			status = "disabled";
+		};
+		eadc: eadc@40043000 {
+			compatible = "nuvoton,numaker2-adc";
+			reg = < 0x40043000 0xffc >;
+			interrupts = < 0x2a 0x0 >;
+			resets = < &rst 0x400001c >;
+			clocks = < &pcc 0x4003fe1c 0x0 0x0 >;
+			channels = < 0x10 >;
+			status = "okay";
+			#io-channel-cells = < 0x1 >;
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x0 >;
+			pinctrl-0 = < &eadc_pb14 &eadc_pb13 &eadc_pb12 &eadc_pb11 &eadc_pb10 &eadc_pb9 &eadc_pb8 &eadc_pb7 &eadc_pb6 &eadc_pb15 >;
+			pinctrl-names = "default";
+			phandle = < 0x12 >;
+			channel@14 {
+				reg = < 0xe >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@13 {
+				reg = < 0xd >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@12 {
+				reg = < 0xc >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@11 {
+				reg = < 0xb >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@10 {
+				reg = < 0xa >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@9 {
+				reg = < 0x9 >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@8 {
+				reg = < 0x8 >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@7 {
+				reg = < 0x7 >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@6 {
+				reg = < 0x6 >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+			channel@15 {
+				reg = < 0xf >;
+				zephyr,gain = "ADC_GAIN_1";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = < 0x0 >;
+				zephyr,resolution = < 0xc >;
+				zephyr,vref-mv = < 0xce4 >;
+			};
+		};
+	};
+	cpus {
+		#address-cells = < 0x1 >;
+		#size-cells = < 0x0 >;
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-m23";
+			reg = < 0x0 >;
+		};
+	};
+	sram0: memory@20000000 {
+		compatible = "mmio-sram";
+		reg = < 0x20000000 0x40000 >;
+	};
+	sysclk: system-clock {
+		compatible = "fixed-clock";
+		clock-frequency = < 0x5b8d80 >;
+		#clock-cells = < 0x0 >;
+	};
+	leds {
+		compatible = "gpio-leds";
+		out_led: led_0 {
+			gpios = < &gpiof 0x6 0x0 >;
+			label = "External LED out";
+		};
+	};
+	shock_sensor: shock_sensor {
+		compatible = "zephyr,shock-sensor";
+		status = "okay";
+		io-channels = < &eadc 0xf >;
+		sampling-period-ms = < 0x2 >;
+	};
+	zephyr,user {
+	};
+};

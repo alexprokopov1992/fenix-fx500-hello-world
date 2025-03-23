@@ -1,0 +1,2 @@
+# Load Zephyr board defconfig descriptions.
+osource "C:/Users/GameON/sdk/fenix-fx500-hello-world/app/boards/fenix/fxa500_02/Kconfig.defconfig"
