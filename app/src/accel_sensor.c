@@ -4,7 +4,7 @@
 #include <sensor/accel-sensor.h>
 
 
-#define ACCEL_NODE       DT_ALIAS(mma8652fc)
+#define ACCEL_NODE       DT_ALIAS(accel_sensor)
 
 static const struct device *dev = DEVICE_DT_GET(ACCEL_NODE);
 
