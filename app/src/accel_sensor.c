@@ -41,7 +41,7 @@ static int init()
     // Set sensitivity parameters
     // sensor_attr_set(dev, SENSOR_CHAN_ACCEL_XYZ, SENSOR_ATTR_FULL_SCALE, &(struct sensor_value){ .val1 = 2, .val2 = 0 });
     // sensor_attr_set(dev, SENSOR_CHAN_ACCEL_XYZ, SENSOR_ATTR_SAMPLING_FREQUENCY, &(struct sensor_value){ .val1 = 50, .val2 = 0 });
-    accel_sensor_set_current_position_as_reference(dev);
+    // accel_sensor_set_current_position_as_reference(dev);
     int rez = sensor_attr_set(dev, ACCEL_SENSOR_MODE, ACCEL_SENSOR_SPECIAL_ATTRS, &(struct sensor_value){ .val1 = ACCEL_SENSOR_MODE_ARMED, .val2 = 0 });
     printk("REZ IS %d \n", rez);
     // Set motion detection trigger
