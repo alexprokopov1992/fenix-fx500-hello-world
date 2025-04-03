@@ -24,6 +24,7 @@
 		// analog-inputs = &analog_inputs0;
 		// v12v = &v12v;
 		// shake-sensor = &shake_sensor;
+		accelerometer = &mma8652fc;
 		shock-sensor = &shock_sensor;
 	};
 

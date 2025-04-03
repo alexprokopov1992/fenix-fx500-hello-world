@@ -55,7 +55,7 @@ manifest:
 
     - name: accel-sensor-driver
       path: modules/accel-sensor-driver
-      url: https://github.com/baden/zephyr-accel-sensor.git
+      url: https://github.com/alexprokopov1992/zephyr-accel-sensor
       revision: main
 
 
