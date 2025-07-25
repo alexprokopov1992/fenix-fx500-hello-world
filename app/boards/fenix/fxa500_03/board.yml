@@ -1,0 +1,13 @@
+board:
+  name: fxa500_03
+  vendor: fenix
+  socs:
+    - name: stm32h563xx
+    #- name: esp32c6-mini
+  # revision:
+  #   format: <major.minor.patch|letter|number|custom>
+  #   default: <default-revision-value>
+  #   exact: <true|false>
+  #   revisions:
+  #   - name: <revA>
+  #   - name: <revB>

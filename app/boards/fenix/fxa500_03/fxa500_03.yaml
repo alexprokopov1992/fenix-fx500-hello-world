@@ -1,0 +1,17 @@
+# Copyright (c) 2023 Nuvoton Technology Corporation.
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: fxa500_03
+name: Fenix Auto FXA500-03 board
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 640
+flash: 2048
+supported:
+  - gpio
+  - can
+vendor: fenix

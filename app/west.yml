@@ -20,6 +20,7 @@ manifest:
           - littlefs
           - lz4
           - hal_wch
+          - hal_stm32
         # name-blocklist:
         #   - ci-tools
         #   - hal_altera
