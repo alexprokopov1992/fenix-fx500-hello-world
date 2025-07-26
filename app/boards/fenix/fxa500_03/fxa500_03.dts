@@ -32,6 +32,21 @@
 		// shock-sensor = &shock_sensor;
 	};
 
+	transceiver1: can-phy1 {
+		compatible = "microchip,mcp2562fd", "can-transceiver-gpio";
+		standby-gpios = <&gpiob 7 GPIO_ACTIVE_LOW>;
+		max-bitrate = <5000000>;
+		#phy-cells = <0>;
+	};
+
+	transceiver2: can-phy2 {
+		compatible = "microchip,mcp2562fd", "can-transceiver-gpio";
+		standby-gpios = <&gpioe 0 GPIO_ACTIVE_LOW>;
+		max-bitrate = <5000000>;
+		#phy-cells = <0>;
+	};
+
+
 	chosen {
 		zephyr,console = &usart3;
 		zephyr,shell-uart = &usart3;
@@ -208,6 +223,7 @@
 
 &clk_hsi48 {
 	status = "okay";
+	// crs-usb-sof;
 };
 
 &clk_lse {
@@ -232,6 +248,28 @@
 	apb2-prescaler = <1>;
 	apb3-prescaler = <2>;
 };
+
+
+&fdcan1 {
+	pinctrl-0 = <&fdcan1_rx_pb8 &fdcan1_tx_pb9>;
+	pinctrl-names = "default";
+	clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000200>,
+		 <&rcc STM32_SRC_PLL1_Q FDCAN_SEL(1)>;
+	clk-divider = <2>;
+	phys = <&transceiver1>;
+	status = "okay";
+};
+
+&fdcan2 {
+	pinctrl-0 = <&fdcan2_rx_pb5 &fdcan2_tx_pb6>;
+	pinctrl-names = "default";
+	clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000200>,
+		 <&rcc STM32_SRC_PLL1_Q FDCAN_SEL(1)>;
+	clk-divider = <2>;
+	phys = <&transceiver2>;
+	status = "okay";
+};
+
 
 // &eadc {
 // 	#address-cells = <1>;
@@ -549,6 +587,82 @@
 	pinctrl-names = "default";
 	current-speed = <115200>;
 	status = "okay";
+};
+
+&spi2 {
+	pinctrl-0 = <&spi2_sck_pb13 &spi2_miso_pb14 &spi2_mosi_pb15>;
+	pinctrl-names = "default";
+	cs-gpios = <&gpiob 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	status = "okay";
+
+	lis2dw12: lis2dw12@0 {
+		compatible = "st,lis2dw12";
+		spi-max-frequency = <1000000>;
+		reg = <0>;
+		irq-gpios = <&gpiod 8 GPIO_ACTIVE_HIGH>;
+	};
+
+};
+
+&xspi1 {
+	pinctrl-0 = <&octospi1_io0_pb1 &octospi1_io1_pb0
+		     &octospi1_io2_pa7 &octospi1_io3_pa6
+		     &octospi1_clk_pb2 &octospi1_ncs_pe11>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	w25q128jv: w25q128jv@90000000 {
+		status="okay";
+		// compatible = "st,stm32-qspi-nor";
+		// compatible = "jedec,spi-nor";
+		compatible = "st,stm32-xspi-nor";
+		reg = <0x90000000 DT_SIZE_M(16)>;	// 16MB = 128Mb
+		spi-bus-width = <XSPI_QUAD_MODE>;
+		// data-rate = <XSPI_DTR_TRANSFER>;
+		data-rate = <XSPI_STR_TRANSFER>;
+		// size = <DT_SIZE_M(128)>;
+		// writeoc = "pp4io";
+		// readoc = "read4io";
+		ospi-max-frequency = <DT_FREQ_M(133)>;
+		// sck-frequency = <DT_FREQ_M(133)>;
+		// W25Q128JV-IN/IQ/JQ = 0xEF 40 18
+		// W25Q128JV-IM*/JM* = 0xEF 70 18
+		jedec-id = [ef 40 18];
+
+		// has-dpd;
+		// t-enter-dpd = <3000>;
+		// t-exit-dpd = <3000>;
+
+		// erase-block-size = <4096>;
+		// write-block-size = <1>;
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			/* This is the littlefs v1 file system pre-installed
+		 	* by Particle.
+		 	*/
+			littlefs_partition: partition@0 {
+				label = "littlefs";
+				reg = <0x00000000 DT_SIZE_M(8)>;	// Eah! Half of entire memory.
+			};
+
+			/* 1MB partition to use for raw data storage. */
+			storage_partition: partition@800000 {
+				label = "storage";
+				reg = <DT_SIZE_M(8) DT_SIZE_M(1)>;
+			};
+
+			/* 7MB partition for GPS-buffer data. */
+			gps_partition: partition@900000 {
+				label = "gps";
+				reg = <DT_SIZE_M(8) DT_SIZE_M(7)>;
+			};
+		};
+	};
+
 };
 
 // &uart5 {
