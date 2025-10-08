@@ -6,7 +6,7 @@
 
 /dts-v1/;
 #include <st/h5/stm32h563Xi.dtsi>
-#include <st/h5/stm32h563vitx-pinctrl.dtsi>
+#include <st/h5/stm32h563vgtx-pinctrl.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 // #include <nuvoton/m2354.dtsi>
@@ -32,6 +32,7 @@
 		// shock-sensor = &shock_sensor;
 	};
 
+	/*
 	transceiver1: can-phy1 {
 		compatible = "microchip,mcp2562fd", "can-transceiver-gpio";
 		standby-gpios = <&gpiob 7 GPIO_ACTIVE_LOW>;
@@ -45,11 +46,11 @@
 		max-bitrate = <5000000>;
 		#phy-cells = <0>;
 	};
-
+	*/
 
 	chosen {
-		zephyr,console = &usart3;
-		zephyr,shell-uart = &usart3;
+		zephyr,console = &uart4;
+		zephyr,shell-uart = &uart4;
 		zephyr,sram = &sram1;
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &code_partition;
@@ -61,7 +62,7 @@
 		compatible = "gpio-leds";
 		// status = "disabled";
 		out_led: led_0 {
-			gpios = <&gpioe 14 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpioc 9 GPIO_ACTIVE_HIGH>;
 			label = "External LED out";
 		};
 	};
@@ -217,7 +218,7 @@
 
 &clk_hse {
 	clock-frequency = <DT_FREQ_M(8)>; /* STLink 8MHz clock */
-	hse-bypass;
+	// hse-bypass;
 	status = "okay";
 };
 
@@ -231,10 +232,10 @@
 };
 
 &pll {
-	div-m = <2>;
-	mul-n = <120>;
+	div-m = <1>;
+	mul-n = <62>;
 	div-p = <2>;
-	div-q = <3>;
+	div-q = <2>;
 	div-r = <2>;
 	clocks = <&clk_hse>;
 	status = "okay";
@@ -242,14 +243,14 @@
 
 &rcc {
 	clocks = <&pll>;
-	clock-frequency = <DT_FREQ_M(240)>;
+	clock-frequency = <DT_FREQ_M(250)>;
 	ahb-prescaler = <1>;
-	apb1-prescaler = <2>;
+	apb1-prescaler = <1>;
 	apb2-prescaler = <1>;
-	apb3-prescaler = <2>;
+	apb3-prescaler = <1>;
 };
 
-
+/*
 &fdcan1 {
 	pinctrl-0 = <&fdcan1_rx_pb8 &fdcan1_tx_pb9>;
 	pinctrl-names = "default";
@@ -269,7 +270,7 @@
 	phys = <&transceiver2>;
 	status = "okay";
 };
-
+*/
 
 // &eadc {
 // 	#address-cells = <1>;
@@ -582,18 +583,19 @@
 // 	status = "okay";
 // };
 
-&usart3 {
-	pinctrl-0 = <&usart3_tx_pc10 &usart3_rx_pc11>;
+&uart4 {
+	pinctrl-0 = <&uart4_tx_pc10 &uart4_rx_pc11>;
 	pinctrl-names = "default";
 	current-speed = <115200>;
 	status = "okay";
 };
 
+
 &spi2 {
 	pinctrl-0 = <&spi2_sck_pb13 &spi2_miso_pb14 &spi2_mosi_pb15>;
 	pinctrl-names = "default";
 	cs-gpios = <&gpiob 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	status = "okay";
+	status = "disabled";
 
 	lis2dw12: lis2dw12@0 {
 		compatible = "st,lis2dw12";
@@ -609,7 +611,7 @@
 		     &octospi1_io2_pa7 &octospi1_io3_pa6
 		     &octospi1_clk_pb2 &octospi1_ncs_pe11>;
 	pinctrl-names = "default";
-	status = "okay";
+	status = "disabled";
 
 	w25q128jv: w25q128jv@90000000 {
 		status="okay";
