@@ -251,14 +251,20 @@
 	apb3-prescaler = <2>;
 };
 
-&usb {
+zephyr_udc0: &usb {
+	pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+	pinctrl-names = "default";
 	status = "okay";
+};
+
+//&usb {
+//	status = "okay";
 /*	usb_cdc@0 {
 		compatible = "usb,usb_cdc";
 		status = "okay";
 	};
 */
-};
+//};
 
 /*
 &fdcan1 {
@@ -623,12 +629,13 @@
 	pinctrl-names = "default";
 	status = "disabled";
 
-	w25q128jv: w25q128jv@90000000 {
+	w25q128jv: w25q128jv@0 {
 		status="okay";
 		// compatible = "st,stm32-qspi-nor";
 		// compatible = "jedec,spi-nor";
 		compatible = "st,stm32-xspi-nor";
-		reg = <0x90000000 DT_SIZE_M(16)>;	// 16MB = 128Mb
+		reg = <0>;
+		size = <DT_SIZE_M(16)>;
 		spi-bus-width = <XSPI_QUAD_MODE>;
 		// data-rate = <XSPI_DTR_TRANSFER>;
 		data-rate = <XSPI_STR_TRANSFER>;

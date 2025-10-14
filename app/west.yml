@@ -12,15 +12,19 @@ manifest:
   projects:
     - name: zephyr
       remote: zephyrproject-rtos
-      revision: v4.1.0
+      #revision: v4.1.0
+      revision: main
+      clone-depth: 1
       path: zephyr
       import:
         name-allowlist:
-          - cmsis
+          - cmsis_6
           - littlefs
           - lz4
           - hal_wch
           - hal_stm32
+          - mcuboot
+          - net-tools
         # name-blocklist:
         #   - ci-tools
         #   - hal_altera
