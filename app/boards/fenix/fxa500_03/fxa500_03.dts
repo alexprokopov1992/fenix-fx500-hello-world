@@ -231,23 +231,33 @@
 	status = "okay";
 };
 
+// PLL take 128...560MHz
 &pll {
-	div-m = <1>;
-	mul-n = <62>;
-	div-p = <2>;
-	div-q = <2>;
-	div-r = <2>;
-	clocks = <&clk_hse>;
+	div-m = <2>;	// 8MHx / 2 = 4MHz
+	mul-n = <120>;	// 4MHz * 120 = 480MHz
+	div-p = <2>;	// 480MHz / 2 = 240MHz (->SYSCLK)
+	div-q = <3>;	// 480MHz / 3 = 160MHz (->FDCAN,...?)
+	div-r = <2>;	// 480MHz / 2 = 80MHz
+	clocks = <&clk_hse>;	// HSE = 8MHz
 	status = "okay";
 };
 
 &rcc {
 	clocks = <&pll>;
-	clock-frequency = <DT_FREQ_M(250)>;
+	clock-frequency = <DT_FREQ_M(240)>;
 	ahb-prescaler = <1>;
-	apb1-prescaler = <1>;
+	apb1-prescaler = <2>;
 	apb2-prescaler = <1>;
-	apb3-prescaler = <1>;
+	apb3-prescaler = <2>;
+};
+
+&usb {
+	status = "okay";
+/*	usb_cdc@0 {
+		compatible = "usb,usb_cdc";
+		status = "okay";
+	};
+*/
 };
 
 /*
