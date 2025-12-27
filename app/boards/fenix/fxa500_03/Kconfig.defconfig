@@ -1,9 +1,0 @@
-# SPDX-License-Identifier: Apache-2.0
-#
-# Copyright (c) 2024 BaDen (baden.i.ua@gmail.com)
-
-if BOARD_FXA500_03
-
-config BOARD
-	default "fxa500_03"
-endif

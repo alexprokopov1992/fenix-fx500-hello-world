@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/baden
     - name: badenwork
       url-base: https://github.com/badenwork
+    - name: FenixUkraine
+      url-base: https://github.com/FenixUkraine
 
   group-filter: [-bsec2]
 
@@ -17,11 +19,12 @@ manifest:
       clone-depth: 1
       path: zephyr
       import:
+        path-prefix: deps
         name-allowlist:
           - cmsis_6
           - littlefs
           - lz4
-          - hal_wch
+          # - hal_wch
           - hal_stm32
           - mcuboot
           - net-tools
@@ -43,20 +46,26 @@ manifest:
         #   - sof
       clone-depth: 1
 
-    - name: zephyr-soc-nuvoton-m2354
-      remote: baden
+    - name: zephyr-boards
+      remote: FenixUkraine
       revision: main
-      path: modules/zephyr/soc/nuvoton/m2354
+      clone-depth: 1
+      path: deps/zephyr-boards
 
-    - name: hal_nuvoton
-      remote: badenwork
-      revision: master
-      path: modules/hal/nuvoton
+    # - name: zephyr-soc-nuvoton-m2354
+    #   remote: baden
+    #   revision: main
+    #   path: modules/zephyr/soc/nuvoton/m2354
 
-    - name: shock-sensor-driver
-      path: modules/shock-sensor-driver
-      url: https://github.com/baden/zephyr-shock-sensor-driver.git
-      revision: main
+    # - name: hal_nuvoton
+    #   remote: badenwork
+    #   revision: master
+    #   path: modules/hal/nuvoton
+
+    # - name: shock-sensor-driver
+    #   path: modules/shock-sensor-driver
+    #   url: https://github.com/baden/zephyr-shock-sensor-driver.git
+    #   revision: main
 
 
   self:
