@@ -4,81 +4,99 @@ LOG_MODULE_REGISTER(main);
 
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
-
-// #include <sample_usbd.h>
-
-// #include <zephyr/sys/byteorder.h>
-// #include <zephyr/usb/usbd.h>
-// #include <zephyr/usb/class/usbd_hid.h>
-// #include <zephyr/usb/msos_desc.h>
-
-/*
- * There are three BOS descriptors used in the sample, a USB 2.0 EXTENSION from
- * the USB samples common code, a Microsoft OS 2.0 platform capability
- * descriptor, and a WebUSB platform capability descriptor.
- */
-// #include "usb/webusb.h"
-// #include "usb/msosv2.h"
-
-// static void msg_cb(struct usbd_context *const usbd_ctx,
-// 		   const struct usbd_msg *const msg)
-// {
-// 	LOG_INF("USBD message: %s", usbd_msg_type_string(msg->type));
-
-// 	if (usbd_can_detect_vbus(usbd_ctx)) {
-// 		if (msg->type == USBD_MSG_VBUS_READY) {
-// 			if (usbd_enable(usbd_ctx)) {
-// 				LOG_ERR("Failed to enable device support");
-// 			}
-// 		}
-
-// 		if (msg->type == USBD_MSG_VBUS_REMOVED) {
-// 			if (usbd_disable(usbd_ctx)) {
-// 				LOG_ERR("Failed to disable device support");
-// 			}
-// 		}
-// 	}
-// }
+#include <zephyr/drivers/can.h>
+#include <zephyr/device.h>
 
 int main(void)
 {
-    struct usbd_context *sample_usbd;
     int ret = 0;
+    
+    printk("Hello World from minimal!\n");
 
-	LOG_INF("");
-    LOG_INF("Hello World from minimal!\n");
+    // Отримуємо пристрої CAN за правильними labels з DTS
+    const struct device *can1 = DEVICE_DT_GET(DT_NODELABEL(fdcan1));
+    const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(fdcan2));
 
-	// sample_usbd = sample_usbd_setup_device(msg_cb);
-	// if (sample_usbd == NULL) {
-	// 	LOG_ERR("Failed to setup USB device");
-	// 	return -ENODEV;
-	// }
+    if (!device_is_ready(can1)) {
+        printk("FDCAN1 device not ready\n");
+        return -1;
+    }
 
-	// ret = usbd_add_descriptor(sample_usbd, &bos_vreq_msosv2);
-	// if (ret) {
-	// 	LOG_ERR("Failed to add MSOSv2 capability descriptor");
-	// 	return ret;
-	// }
+    if (!device_is_ready(can2)) {
+        printk("FDCAN2 device not ready\n");
+        return -1;
+    }
 
-	// ret = usbd_add_descriptor(sample_usbd, &bos_vreq_webusb);
-	// if (ret) {
-	// 	LOG_ERR("Failed to add WebUSB capability descriptor");
-	// 	return ret;
-	// }
+    // Налаштування тайміну: sjw=1, prop_seg=0, phase_seg1=13, phase_seg2=2, prescaler=20
+    struct can_timing timing = {
+        .sjw = 1,
+        .prop_seg = 0,
+        .phase_seg1 = 13,
+        .phase_seg2 = 2,
+        .prescaler = 20
+    };
 
-	// ret = usbd_init(sample_usbd);
-	// if (ret) {
-	// 	LOG_ERR("Failed to initialize device support");
-	// 	return ret;
-	// }
+    // ========== FDCAN1 ==========
+    ret = can_set_timing(can1, &timing);
+    if (ret != 0) {
+        printk("Failed to set FDCAN1 timing: %d\n", ret);
+    }
 
-	// if (!usbd_can_detect_vbus(sample_usbd)) {
-	// 	ret = usbd_enable(sample_usbd);
-	// 	if (ret) {
-	// 		LOG_ERR("Failed to enable device support");
-	// 		return ret;
-	// 	}
-	// }
+    ret = can_set_mode(can1, CAN_MODE_NORMAL);
+    if (ret != 0) {
+        printk("Failed to set FDCAN1 mode: %d\n", ret);
+    }
+
+    ret = can_start(can1);
+    if (ret != 0) {
+        printk("Failed to start FDCAN1: %d\n", ret);
+    } else {
+        printk("FDCAN1 started successfully\n");
+    }
+
+    struct can_frame frame1 = {
+        .id = 0x123,
+        .dlc = 1,
+        .data = {0x01}
+    };
+
+    ret = can_send(can1, &frame1, K_MSEC(100), NULL, NULL);
+    if (ret != 0) {
+        printk("Failed to send FDCAN1 frame: %d\n", ret);
+    } else {
+        printk("FDCAN1 frame sent\n");
+    }
+
+    // ========== FDCAN2 ==========
+    ret = can_set_timing(can2, &timing);
+    if (ret != 0) {
+        printk("Failed to set FDCAN2 timing: %d\n", ret);
+    }
+
+    ret = can_set_mode(can2, CAN_MODE_NORMAL);
+    if (ret != 0) {
+        printk("Failed to set FDCAN2 mode: %d\n", ret);
+    }
+
+    ret = can_start(can2);
+    if (ret != 0) {
+        printk("Failed to start FDCAN2: %d\n", ret);
+    } else {
+        printk("FDCAN2 started successfully\n");
+    }
+
+    struct can_frame frame2 = {
+        .id = 0x123,
+        .dlc = 1,
+        .data = {0x01}
+    };
+
+    ret = can_send(can2, &frame2, K_MSEC(100), NULL, NULL);
+    if (ret != 0) {
+        printk("Failed to send FDCAN2 frame: %d\n", ret);
+    } else {
+        printk("FDCAN2 frame sent\n");
+    }
 
     for(;;) {
         k_msleep(1000);
