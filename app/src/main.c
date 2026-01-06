@@ -6,6 +6,12 @@ LOG_MODULE_REGISTER(main);
 #include <zephyr/sys/printk.h>
 #include <zephyr/drivers/can.h>
 #include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/can/transceiver.h>
+
+#define CAN1_ENABLE 1
+#define CAN2_ENABLE 1
 
 // Callback для отримання CAN фреймів
 static void can_rx_callback(const struct device *dev, struct can_frame *frame, void *user_data)
@@ -25,32 +31,47 @@ static int can_setup_and_start(const struct device *dev,
                                 const struct can_timing *timing,
                                 const char *name)
 {
-    int ret;
 
+    int ret;
+    printk("[%s] Checking device readiness...\n", name);
     if (!device_is_ready(dev)) {
-        printk("%s device not ready\n", name);
+        printk("[%s] ERROR: device not ready\n", name);
         return -1;
     }
+    printk("[%s] Device is ready\n", name);
 
+    printk("[%s] Setting timing...\n", name);
     ret = can_set_timing(dev, timing);
     if (ret != 0) {
-        printk("Failed to set %s timing: %d\n", name, ret);
+        printk("[%s] ERROR: Failed to set timing: %d\n", name, ret);
         return ret;
     }
+    printk("[%s] Timing set successfully\n", name);
 
-    ret = can_set_mode(dev, CAN_MODE_NORMAL);
+    printk("[%s] Setting mode to NORMAL...\n", name);
+    can_set_mode(dev, CAN_MODE_NORMAL);
+    
     if (ret != 0) {
-        printk("Failed to set %s mode: %d\n", name, ret);
+        printk("[%s] ERROR: Failed to set mode: %d\n", name, ret);
         return ret;
     }
+    printk("[%s] Mode set successfully\n", name);
 
+    printk("[%s] Starting CAN...\n", name);
     ret = can_start(dev);
     if (ret != 0) {
-        printk("Failed to start %s: %d\n", name, ret);
+        printk("[%s] ERROR: Failed to start: %d\n", name, ret);
         return ret;
     }
-
-    printk("%s started successfully\n", name);
+    printk("[%s] ✓ Started successfully\n", name);
+    
+    // Перевіряємо стан після старту
+    enum can_state state;
+    ret = can_get_state(dev, &state, NULL);
+    if (ret == 0) {
+        printk("[%s] Current state: %d\n", name, state);
+    }
+    
     k_msleep(10);
     
     return 0;
@@ -60,17 +81,18 @@ static int can_setup_rx_filter(const struct device *dev, const char *name)
 {
     struct can_filter filter = {
         .flags = 0,
-        .id = 0x123,  // Приймаємо фрейми з ID 0x123
-        .mask = CAN_STD_ID_MASK  // Точна відповідність ID
+        .id = 0x123,
+        .mask = CAN_STD_ID_MASK
     };
 
+    printk("[%s] Adding RX filter...\n", name);
     int filter_id = can_add_rx_filter(dev, can_rx_callback, (void *)name, &filter);
     if (filter_id < 0) {
-        printk("Failed to add %s RX filter: %d\n", name, filter_id);
+        printk("[%s] ERROR: Failed to add RX filter: %d\n", name, filter_id);
         return filter_id;
     }
 
-    printk("%s RX filter added (ID: %d)\n", name, filter_id);
+    printk("[%s] ✓ RX filter added (ID: %d)\n", name, filter_id);
     return filter_id;
 }
 
@@ -90,13 +112,24 @@ static int can_send_frame(const struct device *dev,
         memcpy(frame.data, data, MIN(dlc, 8));
     }
 
-    ret = can_send(dev, &frame, K_MSEC(500), NULL, NULL);
+    printk("[%s] Sending frame (ID: 0x%03X, DLC: %d)...\n", name, id, dlc);
+    
+    // Спробуємо з більшим timeout
+    ret = can_send(dev, &frame, K_MSEC(2000), NULL, NULL);
     if (ret != 0) {
-        printk("Failed to send %s frame: %d\n", name, ret);
+        printk("[%s] ERROR: Failed to send frame: %d\n", name, ret);
+        
+        // Перевіряємо стан шини
+        enum can_state state;
+        struct can_bus_err_cnt err_cnt;
+        if (can_get_state(dev, &state, &err_cnt) == 0) {
+            printk("[%s] State: %d, TX errors: %d, RX errors: %d\n", 
+                   name, state, err_cnt.tx_err_cnt, err_cnt.rx_err_cnt);
+        }
         return ret;
     }
 
-    printk("%s frame sent (ID: 0x%03X, DLC: %d)\n", name, id, dlc);
+    printk("[%s] ✓ Frame sent successfully\n", name);
     return 0;
 }
 
@@ -104,15 +137,28 @@ int first_can_test();
 int second_can_test();
 int together_can_test();
 
-
 int main(void)
 {
-    int ret;
-    
-    printk("Hello World from minimal!\n");
+    printk("\n=================================\n");
+    printk("FDCAN Test Application Started\n");
+    printk("=================================\n\n");
 
+    printk("--- Testing FDCAN1 only ---\n");
     first_can_test();
+    
+    k_msleep(500);
+    
+    printk("\n--- Testing FDCAN2 only ---\n");
     second_can_test();
+    
+    k_msleep(500);
+    
+    printk("\n--- Testing FDCAN1 and FDCAN2 together ---\n");
+    together_can_test();
+    
+    printk("\n=================================\n");
+    printk("All tests completed\n");
+    printk("=================================\n");
     
     for(;;) {
         k_msleep(1000);
@@ -121,7 +167,9 @@ int main(void)
     return 0;
 }
 
-int first_can_test(){
+int first_can_test()
+{
+    #if CAN1_ENABLE
     int ret;
 
     const struct device *can1 = DEVICE_DT_GET(DT_NODELABEL(fdcan1));
@@ -132,130 +180,130 @@ int first_can_test(){
         .phase_seg2 = 2,
         .prescaler = 20
     };
+
     ret = can_setup_and_start(can1, &timing, "FDCAN1");
     if (ret != 0) {
         return ret;
     }
-     ret = can_setup_rx_filter(can1, "FDCAN1");
-    if (ret < 0) {
-        return ret;
-    }
-    printk("Waiting for CAN bus stabilization...\n");
-    k_msleep(50);
     
-    int8_t data1[] = {0x01};
-    ret = can_send_frame(can1, 0x123, data1, 1, "FDCAN1");
-    if (ret != 0) {
-        printk("FDCAN1 send failed, continuing...\n");
-        return ret;
-    }
-
-    k_msleep(100);
-
-    ret = can_stop(can1);
-    if (ret != 0) {
-        printk("FDCAN1 stop failed, continuing...\n");
-        return ret;
-    }
-    return 0;
-}
-
-int second_can_test(){
-    int ret;
-
-    const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(fdcan2));
-    struct can_timing timing = {
-        .sjw = 1,
-        .prop_seg = 0,
-        .phase_seg1 = 13,
-        .phase_seg2 = 2,
-        .prescaler = 20
-    };
-    ret = can_setup_and_start(can2, &timing, "FDCAN2");
-    if (ret != 0) {
-        return ret;
-    }
-     ret = can_setup_rx_filter(can2, "FDCAN2");
-    if (ret < 0) {
-        return ret;
-    }
-    printk("Waiting for CAN bus stabilization...\n");
-    k_msleep(50);
-    
-    int8_t data2[] = {0x02};
-    ret = can_send_frame(can2, 0x123, data2, 1, "FDCAN2");
-    if (ret != 0) {
-        printk("FDCAN2 send failed, continuing...\n");
-        return ret;
-    }
-
-    k_msleep(100);
-
-    ret = can_stop(can2);
-    if (ret != 0) {
-        printk("FDCAN2 stop failed, continuing...\n");
-        return ret;
-    }
-    return 0;
-}
-
-int together_can_test(){
-    int ret;
-    
-    const struct device *can1 = DEVICE_DT_GET(DT_NODELABEL(fdcan1));
-    const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(fdcan2));
-
-    struct can_timing timing = {
-        .sjw = 1,
-        .prop_seg = 0,
-        .phase_seg1 = 13,
-        .phase_seg2 = 2,
-        .prescaler = 20
-    };
-
-    // ========== FDCAN1 ==========
-    ret = can_setup_and_start(can1, &timing, "FDCAN1");
-    if (ret != 0) {
-        return ret;
-    }
-
-    // Додаємо RX фільтр для FDCAN1
     ret = can_setup_rx_filter(can1, "FDCAN1");
     if (ret < 0) {
         return ret;
     }
-
-    // ========== FDCAN2 ==========
-    ret = can_setup_and_start(can2, &timing, "FDCAN2");
-    if (ret != 0) {
-        return ret;
-    }
-
-    // Додаємо RX фільтр для FDCAN2
-    ret = can_setup_rx_filter(can2, "FDCAN2");
-    if (ret < 0) {
-        return ret;
-    }
-
+    
     printk("Waiting for CAN bus stabilization...\n");
     k_msleep(50);
-
-    // Тепер відправляємо фрейми
+    
     uint8_t data1[] = {0x01};
     ret = can_send_frame(can1, 0x123, data1, 1, "FDCAN1");
     if (ret != 0) {
         printk("FDCAN1 send failed, continuing...\n");
-        return ret;
     }
 
-    k_msleep(100);  // Невелика затримка між відправками
+    k_msleep(100);
 
+    // printk("[FDCAN1] Stopping...\n");
+    // ret = can_stop(can1);
+    // if (ret != 0) {
+    //     printk("[FDCAN1] ERROR: Stop failed: %d\n", ret);
+    //     return ret;
+    // }
+    // printk("[FDCAN1] ✓ Stopped successfully\n");
+    
+    #endif
+
+    return 0;
+}
+
+int second_can_test()
+{
+    #if CAN2_ENABLE
+    int ret;
+
+    const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(fdcan2));
+    struct can_timing timing = {
+        .sjw = 1,
+        .prop_seg = 0,
+        .phase_seg1 = 13,
+        .phase_seg2 = 2,
+        .prescaler = 20
+    };
+
+    ret = can_setup_and_start(can2, &timing, "FDCAN2");
+    if (ret != 0) {
+        return ret;
+    }
+    
+    ret = can_setup_rx_filter(can2, "FDCAN2");
+    if (ret < 0) {
+        return ret;
+    }
+    
+    printk("Waiting for CAN bus stabilization...\n");
+    k_msleep(50);
+    
     uint8_t data2[] = {0x02};
     ret = can_send_frame(can2, 0x123, data2, 1, "FDCAN2");
     if (ret != 0) {
         printk("FDCAN2 send failed, continuing...\n");
-        return ret;
     }
+
+    k_msleep(100);
+
+    // printk("[FDCAN2] Stopping...\n");
+    // ret = can_stop(can2);
+    // if (ret != 0) {
+    //     printk("[FDCAN2] ERROR: Stop failed: %d\n", ret);
+    //     return ret;
+    // }
+    // printk("[FDCAN2] ✓ Stopped successfully\n");
+    
+    #endif
+
+    return 0;
+}
+
+int together_can_test()
+{
+    int ret;
+    
+    #if CAN1_ENABLE
+    const struct device *can1 = DEVICE_DT_GET(DT_NODELABEL(fdcan1));
+    #endif
+    #if CAN2_ENABLE
+    const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(fdcan2));
+    #endif
+
+    printk("\n[TOGETHER] Sending frames...\n");
+    
+    #if CAN1_ENABLE
+    uint8_t data1[] = {0x01};
+    ret = can_send_frame(can1, 0x123, data1, 1, "FDCAN1");
+    if (ret != 0) {
+        printk("FDCAN1 send failed, continuing...\n");
+    }
+
+    k_msleep(100);
+    #endif
+
+    #if CAN2_ENABLE
+    uint8_t data2[] = {0x02};
+    ret = can_send_frame(can2, 0x123, data2, 1, "FDCAN2");
+    if (ret != 0) {
+        printk("FDCAN2 send failed, continuing...\n");
+    }
+    
+    k_msleep(100);
+    #endif
+    // Зупиняємо обидва
+    // printk("\n[TOGETHER] Stopping both CAN interfaces...\n");
+    // #if CAN1_ENABLE
+    // can_stop(can1);
+    // #endif
+    // #if CAN2_ENABLE
+    // can_stop(can2);
+    // #endif
+    // printk("[TOGETHER] ✓ Both stopped\n");
 
     return 0;
 }

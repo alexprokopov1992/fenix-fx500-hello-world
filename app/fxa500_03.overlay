@@ -1,0 +1,11 @@
+&shock_sensor {
+    status = "disabled";
+};
+
+&fdcan1 {
+	status = "okay";
+};
+
+&fdcan2 {
+	status = "okay";
+};

@@ -1,3 +1,0 @@
-&shock_sensor {
-    status = "disabled";
-};
