@@ -18,14 +18,22 @@ struct can_timing_entry {
     uint32_t bitrate;
 };
 
-/* STM32H563, FDCAN kernel clock = 160 MHz */
 static const struct can_timing_entry can_bitrate_table[] = {
-    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 10 }, 1000000 },
-    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 20 }, 500000  },
-    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 40 }, 250000  },
-    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 80 }, 125000  },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 10   }, 1000000 },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 20   }, 500000  },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 40   }, 250000  },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 80   }, 125000  },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 100  }, 100000  },
+
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 120  }, 83333   },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 200  }, 50000   },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 300  }, 33333   },
+
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 400  }, 25000   },
+    { { .sjw = 1, .prop_seg = 0, .phase_seg1 = 13, .phase_seg2 = 2, .prescaler = 500  }, 20000   },
 };
 
+static int sniff_filter_id = -1;
 static volatile bool can_rx_seen;
 
 static void can_rx_detect_cb(const struct device *dev,
@@ -58,11 +66,16 @@ static int can_auto_baud(const struct device *can,
     struct can_filter sniff_filter = {
         .flags = 0,
         .id = 0x000,
-        .mask = 0x000, /* accept all */
+        .mask = 0x000,
     };
 
     printk("FDCAN auto-baud started...\n");
 
+    sniff_filter_id = can_add_rx_filter(can,
+                          can_rx_detect_cb,
+                          NULL,
+                          &sniff_filter);
+                          
     for (int i = 0; i < ARRAY_SIZE(can_bitrate_table); i++) {
 
         printk("Trying bitrate %u...\n",
@@ -78,17 +91,12 @@ static int can_auto_baud(const struct device *can,
 
         can_set_mode(can, CAN_MODE_LISTENONLY);
 
-        can_add_rx_filter(can,
-                          can_rx_detect_cb,
-                          NULL,
-                          &sniff_filter);
-
         if (can_start(can)) {
             printk("can_start failed\n");
             continue;
         }
 
-        if (wait_for_can_rx(300)) {
+        if (wait_for_can_rx(1000)) {
 
             enum can_state state;
             struct can_bus_err_cnt err;
@@ -104,12 +112,17 @@ static int can_auto_baud(const struct device *can,
                     can_bitrate_table[i].bitrate);
 
                 can_stop(can);
+                if (sniff_filter_id >= 0) {
+                    can_remove_rx_filter(can, sniff_filter_id);
+                    sniff_filter_id = -1;
+                }
                 can_set_mode(can, CAN_MODE_NORMAL);
                 can_start(can);
 
                 if (detected_bitrate) {
                     *detected_bitrate = can_bitrate_table[i].bitrate;
                 }
+                
                 return 0;
             }
         }
@@ -117,7 +130,11 @@ static int can_auto_baud(const struct device *can,
         can_stop(can);
         k_msleep(50);
     }
-
+    
+    if (sniff_filter_id >= 0) {
+        can_remove_rx_filter(can, sniff_filter_id);
+        sniff_filter_id = -1;
+    }
     printk("❌ Auto-baud failed\n");
     return -ENODEV;
 }
@@ -209,10 +226,13 @@ int main(void)
     uint32_t detected_bitrate;
     if (can_auto_baud(can1, &detected_bitrate) == 0) {
         printk("CAN1 ready @ %u\n", detected_bitrate);
+        can_stop(can1);
         can_add_rx_filter(can1,
                           can_rx_callback,
                           "FDCAN1",
                           &filter1);
+        can_set_mode(can1, CAN_MODE_NORMAL);
+        can_start(can1);
     } else {
         printk("CAN1 auto-baud FAILED\n");
     }
