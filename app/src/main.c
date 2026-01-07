@@ -94,12 +94,13 @@ int main(void)
     can_start(can2);
     
     printk("Both can started\n");
+    k_msleep(1000);
     
-    // int ret = can_send_frame(can1, 0x123, data1, 1, "FDCAN1");
-    // if (ret != 0) {
-    //     printk("FDCAN1 send failed, continuing...\n");
-    // }
-    int ret = can_send_frame(can2, 0x124, data2, 1, "FDCAN2");
+    int ret = can_send_frame(can1, 0x123, data1, 1, "FDCAN1");
+    if (ret != 0) {
+        printk("FDCAN1 send failed, continuing...\n");
+    }
+    ret = can_send_frame(can2, 0x124, data2, 1, "FDCAN2");
     if (ret != 0) {
         printk("FDCAN2 send failed, continuing...\n");
     }
